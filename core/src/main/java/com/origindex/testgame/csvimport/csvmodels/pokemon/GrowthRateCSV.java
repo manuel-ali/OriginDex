@@ -1,10 +1,10 @@
-package com.origindex.testgame.csvimport.csvmodels.pokemon.description;
+package com.origindex.testgame.csvimport.csvmodels.pokemon;
 
-public class PokemonShapeCSV {
+public class GrowthRateCSV {
     private int id;
-    private String identifier; //Nombre de la forma del pokemon (pez, humanoide, etc)
+    private String identifier; //Nombre de la tasa de crecimiento (lento, medio, etc)
 
-    public PokemonShapeCSV(int id, String identifier) {
+    public GrowthRateCSV(int id, String identifier) {
         this.id = id;
         this.identifier = identifier;
     }
@@ -27,7 +27,7 @@ public class PokemonShapeCSV {
 
     @Override
     public String toString() {
-        return "PokemonShapeCSV{" +
+        return "GrowthRateCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
             '}';

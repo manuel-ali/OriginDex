@@ -1,10 +1,10 @@
 package com.origindex.testgame.csvimport.csvmodels.pokemon.description;
 
-public class PokemonShapeCSV {
+public class PokemonHabitatCSV {
     private int id;
-    private String identifier; //Nombre de la forma del pokemon (pez, humanoide, etc)
+    private String identifier; //Nombre del habitat (cave, forest, etc)
 
-    public PokemonShapeCSV(int id, String identifier) {
+    public PokemonHabitatCSV(int id, String identifier) {
         this.id = id;
         this.identifier = identifier;
     }
@@ -27,7 +27,7 @@ public class PokemonShapeCSV {
 
     @Override
     public String toString() {
-        return "PokemonShapeCSV{" +
+        return "PokemonHabitatCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
             '}';
