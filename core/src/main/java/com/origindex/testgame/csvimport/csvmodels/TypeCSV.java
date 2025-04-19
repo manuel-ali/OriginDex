@@ -1,17 +1,17 @@
 package com.origindex.testgame.csvimport.csvmodels;
 
-//Clase de importacion de types.csv para la base de datos
+//Clase de importación de types.csv para la base de datos
 public class TypeCSV {
     private int id;
     private String identifier;
-    private int generation_id;
-    private Integer damage_class_id;
+    private int generationId;
+    private Integer damageClassId;
 
-    public TypeCSV(int id, String identifier, int generation_id, Integer damage_class_id) {
+    public TypeCSV(int id, String identifier, int generationId, Integer damageClassId) {
         this.id = id;
         this.identifier = identifier;
-        this.generation_id = generation_id;
-        this.damage_class_id = damage_class_id;
+        this.generationId = generationId;
+        this.damageClassId = damageClassId;
     }
 
     public int getId() {
@@ -30,20 +30,20 @@ public class TypeCSV {
         this.identifier = identifier;
     }
 
-    public int getGeneration_id() {
-        return generation_id;
+    public int getGenerationId() {
+        return generationId;
     }
 
-    public void setGeneration_id(int generation_id) {
-        this.generation_id = generation_id;
+    public void setGenerationId(int generationId) {
+        this.generationId = generationId;
     }
 
-    public Integer getDamage_class_id() {
-        return damage_class_id;
+    public Integer getDamageClassId() {
+        return damageClassId;
     }
 
-    public void setDamage_class_id(Integer damage_class_id) {
-        this.damage_class_id = damage_class_id;
+    public void setDamageClassId(Integer damageClassId) {
+        this.damageClassId = damageClassId;
     }
 
     @Override
@@ -51,8 +51,8 @@ public class TypeCSV {
         return "TypesCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
-            ", generation_id=" + generation_id +
-            ", damage_class_id=" + damage_class_id +
+            ", generationId=" + generationId +
+            ", damageClassId=" + damageClassId +
             '}';
     }
 }

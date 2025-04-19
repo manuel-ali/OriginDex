@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon.evolution;
 
 public class EvolutionChainCSV {
     private int id,
-        babyTriggerItemId; //ID del ítem necesario que tiene que tener uno de los padres al criar para que este nazca, (Azurill solo nace si uno de los padres tiene equipado el Sea Incense)
+        babyTriggerItemId; //Id del ítem necesario que tiene que tener uno de los padres al criar para que este nazca, (Azurill solo nace si uno de los padres tiene equipado el Sea Incense)
 
     public EvolutionChainCSV(int id, int babyTriggerItemId) {
         this.id = id;

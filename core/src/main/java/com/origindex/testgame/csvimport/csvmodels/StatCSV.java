@@ -1,19 +1,19 @@
 package com.origindex.testgame.csvimport.csvmodels;
 
-//Clase de importacion de sats.csv para la base de datos
+//Clase de importación de stats.csv para la base de datos
 public class StatCSV {
     private int id;
-    private Integer damage_class_id;
+    private Integer damageClassId;
     private String identifier;
-    private boolean is_battle_only;
-    private Integer game_index;
+    private boolean isBattleOnly;
+    private Integer gameIndex;
 
-    public StatCSV(int id, Integer damage_class_id, String identifier, boolean is_battle_only, Integer game_index) {
+    public StatCSV(int id, Integer damageClassId, String identifier, boolean isBattleOnly, Integer gameIndex) {
         this.id = id;
-        this.damage_class_id = damage_class_id;
+        this.damageClassId = damageClassId;
         this.identifier = identifier;
-        this.is_battle_only = is_battle_only;
-        this.game_index = game_index;
+        this.isBattleOnly = isBattleOnly;
+        this.gameIndex = gameIndex;
     }
 
     public int getId() {
@@ -24,12 +24,12 @@ public class StatCSV {
         this.id = id;
     }
 
-    public Integer getDamage_class_id() {
-        return damage_class_id;
+    public Integer getDamageClassId() {
+        return damageClassId;
     }
 
-    public void setDamage_class_id(Integer damage_class_id) {
-        this.damage_class_id = damage_class_id;
+    public void setDamageClassId(Integer damageClassId) {
+        this.damageClassId = damageClassId;
     }
 
     public String getIdentifier() {
@@ -41,29 +41,29 @@ public class StatCSV {
     }
 
     public boolean isBattleOnly() {
-        return is_battle_only;
+        return isBattleOnly;
     }
 
-    public void setIs_battle_only(boolean is_battle_only) {
-        this.is_battle_only = is_battle_only;
+    public void setIsBattleOnly(boolean isBattleOnly) {
+        this.isBattleOnly = isBattleOnly;
     }
 
-    public Integer getGame_index() {
-        return game_index;
+    public Integer getGameIndex() {
+        return gameIndex;
     }
 
-    public void setGame_index(Integer game_index) {
-        this.game_index = game_index;
+    public void setGameIndex(Integer gameIndex) {
+        this.gameIndex = gameIndex;
     }
 
     @Override
     public String toString() {
-        return "SatsCSV{" +
+        return "StatCSV{" +
             "id=" + id +
-            ", damage_class_id=" + damage_class_id +
+            ", damageClassId=" + damageClassId +
             ", identifier='" + identifier + '\'' +
-            ", is_battle_only=" + is_battle_only +
-            ", game_index=" + game_index +
+            ", isBattleOnly=" + isBattleOnly +
+            ", gameIndex=" + gameIndex +
             '}';
     }
 }

@@ -3,24 +3,24 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon;
 public class PokemonSpeciesCSV {
     private  int id;
     private String identifier; //Nombre del pokemon
-    private int generationId; //ID de la primera generacion en la que aparece
-    private Integer evolvesFromSpeciesId; //ID del pokemon del que evoluciona
-    private int evolutionChainId, //ID de la cadena evolutiva
-        colorId, //ID del color del pokemon
-        shapeId; //ID de la forma del pokemon (cuadrado, redondo, etc)
-    private Integer habitatId; //ID del habitat del pokemon (bosque, mar, etc)
-    private int genderRate, //Probabilidad de tasa de genero del pokemon, valores 0-4
+    private int generationId; //Id de la primera generación en la que aparece
+    private Integer evolvesFromSpeciesId; //Id del pokemon del que evoluciona
+    private int evolutionChainId, //Id de la cadena evolutiva
+        colorId, //Id del color del pokemon
+        shapeId; //Id de la forma del pokemon (cuadrado, redondo, etc)
+    private Integer habitatId; //Id del habitat del pokemon (bosque, mar, etc)
+    private int genderRate, //Probabilidad de tasa de género del pokemon, valores 0-4
         captureRate, //Probabilidad de captura del pokemon
         baseHappiness; //Felicidad base del pokemon
-    private boolean isBaby; //Si el pokemon es un bebe o no (como pichu, magby, etc)
-    private int hatchCounter; //Numero de pasos necesarios para que el pokemon eclosione de un huevo
-    private boolean hasGenderDifferences; //Si el pokemon tiene diferencias de genero (como el caso de los pokemon macho y hembra)
-    private int growthRateId; //ID de la tasa de crecimiento del pokemon (lento, medio, rapido)
-    private boolean formsSwitchable, //Si el pokemon tiene formas intercambiables (como rotom o megaevoluciones)
+    private boolean isBaby; //Si el pokemon es un bebe o no (como Pichu, Magby, etc)
+    private int hatchCounter; //Número de pasos necesarios para que el pokemon eclosione de un huevo
+    private boolean hasGenderDifferences; //Si el pokemon tiene diferencias de género (como el caso de los pokemon macho y hembra)
+    private int growthRateId; //Id de la tasa de crecimiento del pokemon (lento, medio, rápido)
+    private boolean formsSwitchable, //Si el pokemon tiene formas intercambiables (como Rotom o megaevoluciones)
         isLegendary, //Si el pokemon es legendario o no
-        isMythical; //Si el pokemon es mitico o no
-    private int order; //Orden del pokemon en la pokedex
-    private Integer conquestOrder; //Orden de obtencion del pokemon en el juego Pokemon Conquest
+        isMythical; //Si el pokemon es mítico o no
+    private int order; //Orden del pokemon en la Pokedex
+    private Integer conquestOrder; //Orden de obtención del pokemon en el juego Pokemon Conquest
 
     public PokemonSpeciesCSV(int id, String identifier, int generationId, Integer evolvesFromSpeciesId, int evolutionChainId,
                              int colorId, int shapeId, Integer habitatId, int genderRate, int captureRate, int baseHappiness,

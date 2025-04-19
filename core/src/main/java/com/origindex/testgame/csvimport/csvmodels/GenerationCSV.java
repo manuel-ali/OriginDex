@@ -2,12 +2,12 @@ package com.origindex.testgame.csvimport.csvmodels;
 
 public class GenerationCSV {
     private int id;
-    private int main_region_id; //ID de la region principal de la generacion
-    private String identifier; //Nombre de la generacion
+    private int mainRegionId; //Id de la region principal de la generación
+    private String identifier; //Nombre de la generación
 
-    public GenerationCSV(int id, int main_region_id, String identifier) {
+    public GenerationCSV(int id, int mainRegionId, String identifier) {
         this.id = id;
-        this.main_region_id = main_region_id;
+        this.mainRegionId = mainRegionId;
         this.identifier = identifier;
     }
 
@@ -19,12 +19,12 @@ public class GenerationCSV {
         this.id = id;
     }
 
-    public int getMain_region_id() {
-        return main_region_id;
+    public int getMainRegionId() {
+        return mainRegionId;
     }
 
-    public void setMain_region_id(int main_region_id) {
-        this.main_region_id = main_region_id;
+    public void setMainRegionId(int mainRegionId) {
+        this.mainRegionId = mainRegionId;
     }
 
     public String getIdentifier() {
@@ -39,7 +39,7 @@ public class GenerationCSV {
     public String toString() {
         return "GenerationsCSV{" +
             "id=" + id +
-            ", main_region_id=" + main_region_id +
+            ", mainRegionId=" + mainRegionId +
             ", identifier='" + identifier + '\'' +
             '}';
     }

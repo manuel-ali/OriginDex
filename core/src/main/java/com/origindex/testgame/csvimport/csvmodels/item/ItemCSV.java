@@ -3,10 +3,10 @@ package com.origindex.testgame.csvimport.csvmodels.item;
 public class ItemCSV {
     private int id;
     private String identifier; //Nombre del objeto
-    private int categoryId, //ID de la categoria del objeto
+    private int categoryId, //Id de la categoría del objeto
         cost; //Precio del objeto
     private Integer flingPower, //Potencia que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
-        flingEffectId; //ID del efecto especial que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
+        flingEffectId; //Id del efecto especial que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
 
     public ItemCSV(int id, String identifier, int categoryId, int cost, Integer flingPower, Integer flingEffectId) {
         this.id = id;

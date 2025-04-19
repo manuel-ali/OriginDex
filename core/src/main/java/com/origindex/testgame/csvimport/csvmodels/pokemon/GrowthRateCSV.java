@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon;
 
 public class GrowthRateCSV {
     private int id;
-    private String identifier; //Nombre de la tasa de crecimiento (lento, medio, etc)
+    private String identifier; //Nombre de la tasa de crecimiento (lento, medio, etc.)
 
     public GrowthRateCSV(int id, String identifier) {
         this.id = id;

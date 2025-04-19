@@ -1,9 +1,9 @@
 package com.origindex.testgame.csvimport.csvmodels.moves.contest;
 
 public class SuperContestEffectProseCSV {
-    private int superContestEffectId, //ID del efecto del movimiento en el super concurso
-        localLanguageId; //ID del idioma de la traducción
-    private String flavorText; //Texto descriptivo del movimiento en el super concurso
+    private int superContestEffectId, //Id del efecto del movimiento en el superconcurso
+        localLanguageId; //Id del idioma de la traducción
+    private String flavorText; //Texto descriptivo del movimiento en el superconcurso
 
     public SuperContestEffectProseCSV(int superContestEffectId, int localLanguageId, String flavorText) {
         this.superContestEffectId = superContestEffectId;

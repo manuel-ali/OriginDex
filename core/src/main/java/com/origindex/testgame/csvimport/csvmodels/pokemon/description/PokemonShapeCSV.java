@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon.description;
 
 public class PokemonShapeCSV {
     private int id;
-    private String identifier; //Nombre de la forma del pokemon (pez, humanoide, etc)
+    private String identifier; //Nombre de la forma del pokemon (pez, humanoide, etc.)
 
     public PokemonShapeCSV(int id, String identifier) {
         this.id = id;

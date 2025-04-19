@@ -1,30 +1,30 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
-//Clase de importacion de moves.csv para la base de datos
+//Clase de importación de moves.csv para la base de datos
 public class MoveCSV {
     private int id;
     private String identifier;
-    private int generation_id,type_id;
-    private Integer power,pp,accuracy,priority,target_id,damage_class_id,effect_id,effect_chance,contest_type_id,contest_effect_id,super_contest_effect_id;
+    private int generationId,typeId;
+    private Integer power,pp,accuracy,priority,targetId,damageClassId,effectId,effectChance,contestTypeId,contestEffectId,superContestEffectId;
 
-    public MoveCSV(int id, String identifier, int generation_id, int type_id, Integer power, Integer pp,
-                   Integer accuracy, Integer priority, Integer target_id, Integer damage_class_id, Integer effect_id,
-                   Integer effect_chance, Integer contest_type_id, Integer contest_effect_id, Integer super_contest_effect_id) {
+    public MoveCSV(int id, String identifier, int generationId, int typeId, Integer power, Integer pp,
+                   Integer accuracy, Integer priority, Integer targetId, Integer damageClassId, Integer effectId,
+                   Integer effectChance, Integer contestTypeId, Integer contestEffectId, Integer superContestEffectId) {
         this.id = id;
         this.identifier = identifier;
-        this.generation_id = generation_id;
-        this.type_id = type_id;
+        this.generationId = generationId;
+        this.typeId = typeId;
         this.power = power;
         this.pp = pp;
         this.accuracy = accuracy;
         this.priority = priority;
-        this.target_id = target_id;
-        this.damage_class_id = damage_class_id;
-        this.effect_id = effect_id;
-        this.effect_chance = effect_chance;
-        this.contest_type_id = contest_type_id;
-        this.contest_effect_id = contest_effect_id;
-        this.super_contest_effect_id = super_contest_effect_id;
+        this.targetId = targetId;
+        this.damageClassId = damageClassId;
+        this.effectId = effectId;
+        this.effectChance = effectChance;
+        this.contestTypeId = contestTypeId;
+        this.contestEffectId = contestEffectId;
+        this.superContestEffectId = superContestEffectId;
     }
 
     public int getId() {
@@ -43,20 +43,20 @@ public class MoveCSV {
         this.identifier = identifier;
     }
 
-    public int getGeneration_id() {
-        return generation_id;
+    public int getGenerationId() {
+        return generationId;
     }
 
-    public void setGeneration_id(int generation_id) {
-        this.generation_id = generation_id;
+    public void setGenerationId(int generationId) {
+        this.generationId = generationId;
     }
 
-    public int getType_id() {
-        return type_id;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setType_id(int type_id) {
-        this.type_id = type_id;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getPower() {
@@ -91,80 +91,80 @@ public class MoveCSV {
         this.priority = priority;
     }
 
-    public Integer getTarget_id() {
-        return target_id;
+    public Integer getTargetId() {
+        return targetId;
     }
 
-    public void setTarget_id(Integer target_id) {
-        this.target_id = target_id;
+    public void setTargetId(Integer targetId) {
+        this.targetId = targetId;
     }
 
-    public Integer getDamage_class_id() {
-        return damage_class_id;
+    public Integer getDamageClassId() {
+        return damageClassId;
     }
 
-    public void setDamage_class_id(Integer damage_class_id) {
-        this.damage_class_id = damage_class_id;
+    public void setDamageClassId(Integer damageClassId) {
+        this.damageClassId = damageClassId;
     }
 
-    public Integer getEffect_id() {
-        return effect_id;
+    public Integer getEffectId() {
+        return effectId;
     }
 
-    public void setEffect_id(Integer effect_id) {
-        this.effect_id = effect_id;
+    public void setEffectId(Integer effectId) {
+        this.effectId = effectId;
     }
 
-    public Integer getEffect_chance() {
-        return effect_chance;
+    public Integer getEffectChance() {
+        return effectChance;
     }
 
-    public void setEffect_chance(Integer effect_chance) {
-        this.effect_chance = effect_chance;
+    public void setEffectChance(Integer effectChance) {
+        this.effectChance = effectChance;
     }
 
-    public Integer getContest_type_id() {
-        return contest_type_id;
+    public Integer getContestTypeId() {
+        return contestTypeId;
     }
 
-    public void setContest_type_id(Integer contest_type_id) {
-        this.contest_type_id = contest_type_id;
+    public void setContestTypeId(Integer contestTypeId) {
+        this.contestTypeId = contestTypeId;
     }
 
-    public Integer getContest_effect_id() {
-        return contest_effect_id;
+    public Integer getContestEffectId() {
+        return contestEffectId;
     }
 
-    public void setContest_effect_id(Integer contest_effect_id) {
-        this.contest_effect_id = contest_effect_id;
+    public void setContestEffectId(Integer contestEffectId) {
+        this.contestEffectId = contestEffectId;
     }
 
-    public Integer getSuper_contest_effect_id() {
-        return super_contest_effect_id;
+    public Integer getSuperContestEffectId() {
+        return superContestEffectId;
     }
 
-    public void setSuper_contest_effect_id(Integer super_contest_effect_id) {
-        this.super_contest_effect_id = super_contest_effect_id;
+    public void setSuperContestEffectId(Integer superContestEffectId) {
+        this.superContestEffectId = superContestEffectId;
     }
 
     @Override
     public String toString() {
-        return "MovesCSV{" +
+        return "MoveCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
-            ", generation_id=" + generation_id +
-            ", type_id=" + type_id +
+            ", generationId=" + generationId +
+            ", typeId=" + typeId +
             ", power=" + power +
             ", pp=" + pp +
             ", accuracy=" + accuracy +
             ", priority=" + priority +
-            ", target_id=" + target_id +
-            ", damage_class_id=" + damage_class_id +
-            ", effect_id=" + effect_id +
-            ", effect_chance=" + effect_chance +
-            ", contest_type_id=" + contest_type_id +
-            ", contest_effect_id=" + contest_effect_id +
-            ", super_contest_effect_id=" + super_contest_effect_id +
+            ", targetId=" + targetId +
+            ", damageClassId=" + damageClassId +
+            ", effectId=" + effectId +
+            ", effectChance=" + effectChance +
+            ", contestTypeId=" + contestTypeId +
+            ", contestEffectId=" + contestEffectId +
+            ", superContestEffectId=" + superContestEffectId +
             '}';
     }
 }

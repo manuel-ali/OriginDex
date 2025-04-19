@@ -1,17 +1,17 @@
 package com.origindex.testgame.csvimport.csvmodels;
 
-//Clase de importacion de abilities.csv para la base de datos
+//Clase de importación de abilities.csv para la base de datos
 public class AbilityCSV {
     private int id;
     private String identifier;
-    private int generation_id;
-    private boolean is_main_series;
+    private int generationId;
+    private boolean isMainSeries;
 
-    public AbilityCSV(int id, String identifier, int generation_id, boolean is_main_series) {
+    public AbilityCSV(int id, String identifier, int generationId, boolean isMainSeries) {
         this.id = id;
         this.identifier = identifier;
-        this.generation_id = generation_id;
-        this.is_main_series = is_main_series;
+        this.generationId = generationId;
+        this.isMainSeries = isMainSeries;
     }
 
     public int getId() {
@@ -30,29 +30,29 @@ public class AbilityCSV {
         this.identifier = identifier;
     }
 
-    public int getGeneration_id() {
-        return generation_id;
+    public int getGenerationId() {
+        return generationId;
     }
 
-    public void setGeneration_id(int generation_id) {
-        this.generation_id = generation_id;
+    public void setGenerationId(int generationId) {
+        this.generationId = generationId;
     }
 
     public boolean isMainSeries() {
-        return is_main_series;
+        return isMainSeries;
     }
 
-    public void setIs_main_series(boolean is_main_series) {
-        this.is_main_series = is_main_series;
+    public void setMainSeries(boolean mainSeries) {
+        isMainSeries = mainSeries;
     }
 
     @Override
     public String toString() {
-        return "AbilitiesCSV{" +
+        return "AbilityCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
-            ", generation_id=" + generation_id +
-            ", is_main_series=" + is_main_series +
+            ", generationId=" + generationId +
+            ", isMainSeries=" + isMainSeries +
             '}';
     }
 }

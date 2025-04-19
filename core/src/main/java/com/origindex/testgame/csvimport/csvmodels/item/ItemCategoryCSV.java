@@ -2,8 +2,8 @@ package com.origindex.testgame.csvimport.csvmodels.item;
 
 public class ItemCategoryCSV {
     private int id,
-        pocketId; //ID del bolsillo en el que se encuentra el objeto dentro de la mochila
-    private String identifier; //Categoria del objeto (Pociones, Pokeballs, etc)
+        pocketId; //Id del bolsillo en el que se encuentra el objeto dentro de la mochila
+    private String identifier; //Categoría del objeto (Pociones, Poke balls, etc)
 
     public ItemCategoryCSV(int id, int pocketId, String identifier) {
         this.id = id;

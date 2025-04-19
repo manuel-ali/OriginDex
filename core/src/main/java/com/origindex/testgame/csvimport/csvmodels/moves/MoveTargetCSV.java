@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveTargetCSV {
     private int id;
-    private String identifier; //Objetivo del movimiento (Enemigo, aliado, todos, etc)
+    private String identifier; //Objetivo del movimiento (Enemigo, aliado, todos, etc.)
 
     public MoveTargetCSV(int id, String identifier) {
         this.id = id;

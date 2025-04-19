@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon.description;
 
 public class PokemonColorNameCSV {
     private int pokemonColorId, localLanguageId;
-    private String name; //Nombre del color del Pokemon traducido segun el local_language_id
+    private String name; //Nombre del color del Pokemon traducido según el local_language_id
 
     public PokemonColorNameCSV(int pokemonColorId, int localLanguageId, String name) {
         this.pokemonColorId = pokemonColorId;

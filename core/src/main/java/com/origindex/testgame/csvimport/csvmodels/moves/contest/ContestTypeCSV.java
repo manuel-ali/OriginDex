@@ -2,7 +2,7 @@ package com.origindex.testgame.csvimport.csvmodels.moves.contest;
 
 public class ContestTypeCSV {
     private int id;
-    private String identifier; //Categoria del movimiento en concurso Pokemon
+    private String identifier; //Categoría del movimiento en concurso Pokemon
 
     public ContestTypeCSV(int id, String identifier) {
         this.id = id;

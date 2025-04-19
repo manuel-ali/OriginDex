@@ -1,22 +1,22 @@
 package com.origindex.testgame.csvimport.csvmodels.item;
 
-public class ItemPocketNameCSV {
-    private int itemPocketId, //Id del bolsillo del objeto
-        localLanguageId; //Id del idioma de la traducción
-    private String name; //Nombre del bolsillo del objeto
+public class ItemCategoryProseCSV {
+    private int itemCategoryId, //Id de la categoría del objeto
+        localLanguageId;
+    private String name; //Nombre de la categoría del objeto en el idioma local
 
-    public ItemPocketNameCSV(int itemPocketId, int localLanguageId, String name) {
-        this.itemPocketId = itemPocketId;
+    public ItemCategoryProseCSV(int itemCategoryId, int localLanguageId, String name) {
+        this.itemCategoryId = itemCategoryId;
         this.localLanguageId = localLanguageId;
         this.name = name;
     }
 
-    public int getItemPocketId() {
-        return itemPocketId;
+    public int getItemCategoryId() {
+        return itemCategoryId;
     }
 
-    public void setItemPocketId(int itemPocketId) {
-        this.itemPocketId = itemPocketId;
+    public void setItemCategoryId(int itemCategoryId) {
+        this.itemCategoryId = itemCategoryId;
     }
 
     public int getLocalLanguageId() {
@@ -37,8 +37,8 @@ public class ItemPocketNameCSV {
 
     @Override
     public String toString() {
-        return "ItemPocketNameCSV{" +
-            "itemPocketId=" + itemPocketId +
+        return "ItemCategroyProseCSV{" +
+            "itemCategoryId=" + itemCategoryId +
             ", localLanguageId=" + localLanguageId +
             ", name='" + name + '\'' +
             '}';

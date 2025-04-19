@@ -1,40 +1,40 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveEffectProseCSV {
-    private int move_effect_id; //ID del efecto del movimiento
-    private int local_language_id; //ID del idioma de la traduccion (inglés por defecto)
-    private String short_effect; //Descripción corta del efecto del movimiento
-    private String effect; //Descripción mas extensa del efecto del movimiento
+    private int moveEffectId; //Id del efecto del movimiento
+    private int localLanguageId; //Id del idioma de la traducción (inglés por defecto)
+    private String shortEffect; //Descripción corta del efecto del movimiento
+    private String effect; //Descripción más extensa del efecto del movimiento
 
-    public MoveEffectProseCSV(int move_effect_id, int local_language_id, String short_effect, String effect) {
-        this.move_effect_id = move_effect_id;
-        this.local_language_id = local_language_id;
-        this.short_effect = short_effect;
+    public MoveEffectProseCSV(int moveEffectId, int localLanguageId, String shortEffect, String effect) {
+        this.moveEffectId = moveEffectId;
+        this.localLanguageId = localLanguageId;
+        this.shortEffect = shortEffect;
         this.effect = effect;
     }
 
-    public int getMove_effect_id() {
-        return move_effect_id;
+    public int getMoveEffectId() {
+        return moveEffectId;
     }
 
-    public void setMove_effect_id(int move_effect_id) {
-        this.move_effect_id = move_effect_id;
+    public void setMoveEffectId(int moveEffectId) {
+        this.moveEffectId = moveEffectId;
     }
 
-    public int getLocal_language_id() {
-        return local_language_id;
+    public int getLocalLanguageId() {
+        return localLanguageId;
     }
 
-    public void setLocal_language_id(int local_language_id) {
-        this.local_language_id = local_language_id;
+    public void setLocalLanguageId(int localLanguageId) {
+        this.localLanguageId = localLanguageId;
     }
 
-    public String getShort_effect() {
-        return short_effect;
+    public String getShortEffect() {
+        return shortEffect;
     }
 
-    public void setShort_effect(String short_effect) {
-        this.short_effect = short_effect;
+    public void setShortEffect(String shortEffect) {
+        this.shortEffect = shortEffect;
     }
 
     public String getEffect() {
@@ -48,9 +48,9 @@ public class MoveEffectProseCSV {
     @Override
     public String toString() {
         return "MoveEffectProseCSV{" +
-            "move_effect_id=" + move_effect_id +
-            ", local_language_id=" + local_language_id +
-            ", short_effect='" + short_effect + '\'' +
+            "moveEffectId=" + moveEffectId +
+            ", localLanguageId=" + localLanguageId +
+            ", shortEffect='" + shortEffect + '\'' +
             ", effect='" + effect + '\'' +
             '}';
     }

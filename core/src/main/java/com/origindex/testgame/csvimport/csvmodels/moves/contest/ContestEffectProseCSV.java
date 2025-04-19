@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels.moves.contest;
 
 public class ContestEffectProseCSV {
-    private int contestEffectID, //ID del efecto del movimiento en el concurso
-        localLanguageID; //ID del idioma para la traduccion
+    private int contestEffectID, //Id del efecto del movimiento en el concurso
+        localLanguageID; //Id del idioma para la traducción
     private String flavorText, //Texto descriptivo del movimiento en el concurso
         effect; //Texto del efecto del movimiento en el concurso
 
