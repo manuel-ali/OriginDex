@@ -1,10 +1,10 @@
-package com.origindex.testgame.csvimport.csvmodels.moves.contest;
+package com.origindex.testgame.csvimport.csvmodels;
 
-public class ContestTypeCSV {
+public class RegionCSV {
     private int id;
-    private String identifier; //Categoría del movimiento en concurso Pokemon
+    private String identifier; //Nombre de la region (Kanto, Johto, etc.)
 
-    public ContestTypeCSV(int id, String identifier) {
+    public RegionCSV(int id, String identifier) {
         this.id = id;
         this.identifier = identifier;
     }
@@ -27,7 +27,7 @@ public class ContestTypeCSV {
 
     @Override
     public String toString() {
-        return "ContestTypesCSV{" +
+        return "RegionCSV{" +
             "id=" + id +
             ", identifier='" + identifier + '\'' +
             '}';
