@@ -1,7 +1,7 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveEffectCSV {
-    private int id;
+    private final int id;
 
     public MoveEffectCSV(int id) {
         this.id = id;
@@ -9,10 +9,6 @@ public class MoveEffectCSV {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

@@ -17,7 +17,7 @@ apply plugin: 'io.github.fourlastor.construo'
 
 import io.github.fourlastor.construo.Target
 
-sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
+sourceSets.main.resources.srcDirs = ['assets']
 mainClassName = 'com.origindex.testgame.lwjgl3.Lwjgl3Launcher'
 application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-lwjgl3'
@@ -28,9 +28,9 @@ if (JavaVersion.current().isJava9Compatible()) {
 }
 
 dependencies {
+  implementation "org.xerial:sqlite-jdbc:3.48.0.0"
   implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  implementation "org.xerial:sqlite-jdbc:3.43.2.0"
   implementation project(':core')
 
   if(enableGraalNative == 'true') {

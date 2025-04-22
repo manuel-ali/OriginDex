@@ -1,9 +1,9 @@
 package com.origindex.testgame.csvimport.csvmodels.item;
 
 public class ItemFlingEffectProseCSV {
-    private int id;
-    private int localLanguageId; //Idioma del texto
-    private String effect; //Texto del efecto del objeto al lanzarlo
+    private final int id,
+        localLanguageId; //Idioma del texto
+    private final String effect; //Texto del efecto del objeto al lanzarlo
 
     public ItemFlingEffectProseCSV(int id, int localLanguageId, String effect) {
         this.id = id;
@@ -15,24 +15,12 @@ public class ItemFlingEffectProseCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getLocalLanguageId() {
         return localLanguageId;
     }
 
-    public void setLocalLanguageId(int localLanguageId) {
-        this.localLanguageId = localLanguageId;
-    }
-
     public String getEffect() {
         return effect;
-    }
-
-    public void setEffect(String effect) {
-        this.effect = effect;
     }
 
     @Override

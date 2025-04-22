@@ -1,11 +1,11 @@
 package com.origindex.testgame.csvimport.csvmodels.item;
 
 public class ItemCSV {
-    private int id;
-    private String identifier; //Nombre del objeto
-    private int categoryId, //Id de la categoría del objeto
+    private final int id;
+    private final String identifier; //Nombre del objeto
+    private final int categoryId, //Id de la categoría del objeto (stat-boosts, medicine, etc.)
         cost; //Precio del objeto
-    private Integer flingPower, //Potencia que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
+    private final Integer flingPower, //Potencia que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
         flingEffectId; //Id del efecto especial que hace el objeto al lanzarlo cuando el pokemon que lo lleva equipado utiliza el movimiento Fling
 
     public ItemCSV(int id, String identifier, int categoryId, int cost, Integer flingPower, Integer flingEffectId) {
@@ -21,48 +21,24 @@ public class ItemCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public int getCost() {
         return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
     }
 
     public Integer getFlingPower() {
         return flingPower;
     }
 
-    public void setFlingPower(Integer flingPower) {
-        this.flingPower = flingPower;
-    }
-
     public Integer getFlingEffectId() {
         return flingEffectId;
-    }
-
-    public void setFlingEffectId(Integer flingEffectId) {
-        this.flingEffectId = flingEffectId;
     }
 
     @Override

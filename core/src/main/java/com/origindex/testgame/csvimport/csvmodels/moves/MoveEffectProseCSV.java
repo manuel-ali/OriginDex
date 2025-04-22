@@ -1,10 +1,10 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveEffectProseCSV {
-    private int moveEffectId; //Id del efecto del movimiento
-    private int localLanguageId; //Id del idioma de la traducción (inglés por defecto)
-    private String shortEffect; //Descripción corta del efecto del movimiento
-    private String effect; //Descripción más extensa del efecto del movimiento
+    private final int moveEffectId, //Id del efecto del movimiento
+        localLanguageId; //Id del idioma de la traducción (inglés por defecto)
+    private final String shortEffect, //Descripción corta del efecto del movimiento
+        effect; //Descripción más extensa del efecto del movimiento
 
     public MoveEffectProseCSV(int moveEffectId, int localLanguageId, String shortEffect, String effect) {
         this.moveEffectId = moveEffectId;
@@ -17,32 +17,16 @@ public class MoveEffectProseCSV {
         return moveEffectId;
     }
 
-    public void setMoveEffectId(int moveEffectId) {
-        this.moveEffectId = moveEffectId;
-    }
-
     public int getLocalLanguageId() {
         return localLanguageId;
-    }
-
-    public void setLocalLanguageId(int localLanguageId) {
-        this.localLanguageId = localLanguageId;
     }
 
     public String getShortEffect() {
         return shortEffect;
     }
 
-    public void setShortEffect(String shortEffect) {
-        this.shortEffect = shortEffect;
-    }
-
     public String getEffect() {
         return effect;
-    }
-
-    public void setEffect(String effect) {
-        this.effect = effect;
     }
 
     @Override

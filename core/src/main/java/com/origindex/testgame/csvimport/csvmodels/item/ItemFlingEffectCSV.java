@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels.item;
 
 public class ItemFlingEffectCSV {
-    private int id;
-    private String identifier; //Efecto del movimiento al lanzar el objeto (Veneno, parálisis, etc.)
+    private final int id;
+    private final String identifier; //Efecto del movimiento al lanzar el objeto (Veneno, parálisis, etc.)
 
     public ItemFlingEffectCSV(int id, String identifier) {
         this.id = id;
@@ -13,16 +13,8 @@ public class ItemFlingEffectCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

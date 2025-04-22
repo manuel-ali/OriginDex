@@ -2,10 +2,10 @@ package com.origindex.testgame.csvimport.csvmodels;
 
 //Clase de importación de abilities.csv para la base de datos
 public class AbilityCSV {
-    private int id;
-    private String identifier;
-    private int generationId;
-    private boolean isMainSeries;
+    private final int id;
+    private final String identifier; //Nombre de la habilidad
+    private final int generationId; //Id de la generación en la que se introdujo la habilidad
+    private final boolean isMainSeries; //Indica si es parte de la serie principal de juegos
 
     public AbilityCSV(int id, String identifier, int generationId, boolean isMainSeries) {
         this.id = id;
@@ -18,32 +18,16 @@ public class AbilityCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public int getGenerationId() {
         return generationId;
     }
 
-    public void setGenerationId(int generationId) {
-        this.generationId = generationId;
-    }
-
     public boolean isMainSeries() {
         return isMainSeries;
-    }
-
-    public void setMainSeries(boolean mainSeries) {
-        isMainSeries = mainSeries;
     }
 
     @Override

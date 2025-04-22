@@ -1,26 +1,26 @@
 package com.origindex.testgame.csvimport.csvmodels.pokemon;
 
 public class PokemonSpeciesCSV {
-    private  int id;
-    private String identifier; //Nombre del pokemon
-    private int generationId; //Id de la primera generación en la que aparece
-    private Integer evolvesFromSpeciesId; //Id del pokemon del que evoluciona
-    private int evolutionChainId, //Id de la cadena evolutiva
+    private final int id;
+    private final String identifier; //Nombre del pokemon
+    private final int generationId; //Id de la primera generación en la que aparece
+    private final Integer evolvesFromSpeciesId; //Id del pokemon del que evoluciona
+    private final int evolutionChainId, //Id de la cadena evolutiva
         colorId, //Id del color del pokemon
         shapeId; //Id de la forma del pokemon (cuadrado, redondo, etc)
-    private Integer habitatId; //Id del habitat del pokemon (bosque, mar, etc)
-    private int genderRate, //Probabilidad de tasa de género del pokemon, valores 0-4
+    private final Integer habitatId; //Id del habitat del pokemon (bosque, mar, etc)
+    private final int genderRate, //Probabilidad de tasa de género del pokemon, valores 0-4
         captureRate, //Probabilidad de captura del pokemon
         baseHappiness; //Felicidad base del pokemon
-    private boolean isBaby; //Si el pokemon es un bebe o no (como Pichu, Magby, etc)
-    private int hatchCounter; //Número de pasos necesarios para que el pokemon eclosione de un huevo
-    private boolean hasGenderDifferences; //Si el pokemon tiene diferencias de género (como el caso de los pokemon macho y hembra)
-    private int growthRateId; //Id de la tasa de crecimiento del pokemon (lento, medio, rápido)
-    private boolean formsSwitchable, //Si el pokemon tiene formas intercambiables (como Rotom o megaevoluciones)
+    private final boolean isBaby; //Si el pokemon es un bebe o no (como Pichu, Magby, etc)
+    private final int hatchCounter; //Número de pasos necesarios para que el pokemon eclosione de un huevo
+    private final boolean hasGenderDifferences; //Si el pokemon tiene diferencias de género (como el caso de los pokemon macho y hembra)
+    private final int growthRateId; //Id de la tasa de crecimiento del pokemon (lento, medio, rápido)
+    private final boolean formsSwitchable, //Si el pokemon tiene formas intercambiables (como Rotom o megaevoluciones)
         isLegendary, //Si el pokemon es legendario o no
         isMythical; //Si el pokemon es mítico o no
-    private int order; //Orden del pokemon en la Pokedex
-    private Integer conquestOrder; //Orden de obtención del pokemon en el juego Pokemon Conquest
+    private final int order; //Orden del pokemon en la Pokedex
+    private final Integer conquestOrder; //Orden de obtención del pokemon en el juego Pokemon Conquest
 
     public PokemonSpeciesCSV(int id, String identifier, int generationId, Integer evolvesFromSpeciesId, int evolutionChainId,
                              int colorId, int shapeId, Integer habitatId, int genderRate, int captureRate, int baseHappiness,
@@ -52,160 +52,80 @@ public class PokemonSpeciesCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public int getGenerationId() {
         return generationId;
     }
 
-    public void setGenerationId(int generationId) {
-        this.generationId = generationId;
-    }
-
     public Integer getEvolvesFromSpeciesId() {
         return evolvesFromSpeciesId;
-    }
-
-    public void setEvolvesFromSpeciesId(Integer evolvesFromSpeciesId) {
-        this.evolvesFromSpeciesId = evolvesFromSpeciesId;
     }
 
     public int getEvolutionChainId() {
         return evolutionChainId;
     }
 
-    public void setEvolutionChainId(int evolutionChainId) {
-        this.evolutionChainId = evolutionChainId;
-    }
-
     public int getColorId() {
         return colorId;
-    }
-
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
     }
 
     public int getShapeId() {
         return shapeId;
     }
 
-    public void setShapeId(int shapeId) {
-        this.shapeId = shapeId;
-    }
-
     public Integer getHabitatId() {
         return habitatId;
-    }
-
-    public void setHabitatId(Integer habitatId) {
-        this.habitatId = habitatId;
     }
 
     public int getGenderRate() {
         return genderRate;
     }
 
-    public void setGenderRate(int genderRate) {
-        this.genderRate = genderRate;
-    }
-
     public int getCaptureRate() {
         return captureRate;
-    }
-
-    public void setCaptureRate(int captureRate) {
-        this.captureRate = captureRate;
     }
 
     public int getBaseHappiness() {
         return baseHappiness;
     }
 
-    public void setBaseHappiness(int baseHappiness) {
-        this.baseHappiness = baseHappiness;
-    }
-
     public boolean isBaby() {
         return isBaby;
-    }
-
-    public void setBaby(boolean baby) {
-        isBaby = baby;
     }
 
     public int getHatchCounter() {
         return hatchCounter;
     }
 
-    public void setHatchCounter(int hatchCounter) {
-        this.hatchCounter = hatchCounter;
-    }
-
     public boolean isHasGenderDifferences() {
         return hasGenderDifferences;
-    }
-
-    public void setHasGenderDifferences(boolean hasGenderDifferences) {
-        this.hasGenderDifferences = hasGenderDifferences;
     }
 
     public int getGrowthRateId() {
         return growthRateId;
     }
 
-    public void setGrowthRateId(int growthRateId) {
-        this.growthRateId = growthRateId;
-    }
-
     public boolean isFormsSwitchable() {
         return formsSwitchable;
-    }
-
-    public void setFormsSwitchable(boolean formsSwitchable) {
-        this.formsSwitchable = formsSwitchable;
     }
 
     public boolean isLegendary() {
         return isLegendary;
     }
 
-    public void setLegendary(boolean legendary) {
-        isLegendary = legendary;
-    }
-
     public boolean isMythical() {
         return isMythical;
-    }
-
-    public void setMythical(boolean mythical) {
-        isMythical = mythical;
     }
 
     public int getOrder() {
         return order;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
     public Integer getConquestOrder() {
         return conquestOrder;
-    }
-
-    public void setConquestOrder(Integer conquestOrder) {
-        this.conquestOrder = conquestOrder;
     }
 
     @Override

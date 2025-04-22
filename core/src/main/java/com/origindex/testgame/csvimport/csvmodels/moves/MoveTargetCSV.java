@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveTargetCSV {
-    private int id;
-    private String identifier; //Objetivo del movimiento (Enemigo, aliado, todos, etc.)
+    private final int id;
+    private final String identifier; //Objetivo del movimiento (Enemigo, aliado, todos, etc.)
 
     public MoveTargetCSV(int id, String identifier) {
         this.id = id;
@@ -13,16 +13,8 @@ public class MoveTargetCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels.moves;
 
 public class MoveDamageClassCSV {
-    private int id;
-    private String identifier; //Nombre del tipo de daño (físico, especial, estado)
+    private final int id;
+    private final String identifier; //Nombre del tipo de daño (físico, especial, estado)
 
     public MoveDamageClassCSV(int id, String identifier) {
         this.id = id;
@@ -13,16 +13,8 @@ public class MoveDamageClassCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

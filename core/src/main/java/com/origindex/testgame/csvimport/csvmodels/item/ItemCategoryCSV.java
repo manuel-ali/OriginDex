@@ -1,9 +1,9 @@
 package com.origindex.testgame.csvimport.csvmodels.item;
 
 public class ItemCategoryCSV {
-    private int id,
+    private final int id,
         pocketId; //Id del bolsillo en el que se encuentra el objeto dentro de la mochila
-    private String identifier; //Categoría del objeto (Pociones, Poke balls, etc)
+    private final String identifier; //Categoría del objeto (stat-boosts, medicine, etc)
 
     public ItemCategoryCSV(int id, int pocketId, String identifier) {
         this.id = id;
@@ -15,24 +15,12 @@ public class ItemCategoryCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getPocketId() {
         return pocketId;
     }
 
-    public void setPocketId(int pocketId) {
-        this.pocketId = pocketId;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

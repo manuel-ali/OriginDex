@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels;
 
 public class RegionCSV {
-    private int id;
-    private String identifier; //Nombre de la region (Kanto, Johto, etc.)
+    private final int id;
+    private final String identifier; //Nombre de la region (Kanto, Johto, etc.)
 
     public RegionCSV(int id, String identifier) {
         this.id = id;
@@ -13,16 +13,8 @@ public class RegionCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

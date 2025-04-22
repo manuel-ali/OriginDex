@@ -1,8 +1,8 @@
 package com.origindex.testgame.csvimport.csvmodels.pokemon;
 
 public class PokemonMoveMethodCSV {
-    private int id;
-    private String identifier; //Método por el cual se aprende el movimiento (nivel, MT, etc.)
+    private final int id;
+    private final String identifier; //Método por el cual se aprende el movimiento (nivel, MT, etc.)
 
     public PokemonMoveMethodCSV(int id, String identifier) {
         this.id = id;
@@ -13,16 +13,8 @@ public class PokemonMoveMethodCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     @Override

@@ -2,10 +2,21 @@ package com.origindex.testgame.csvimport.csvmodels.moves;
 
 //Clase de importación de moves.csv para la base de datos
 public class MoveCSV {
-    private int id;
-    private String identifier;
-    private int generationId,typeId;
-    private Integer power,pp,accuracy,priority,targetId,damageClassId,effectId,effectChance,contestTypeId,contestEffectId,superContestEffectId;
+    private final int id;
+    private final String identifier;
+    private final int generationId, //Id de la generación en la que se introdujo el movimiento
+        typeId; //Id del tipo de movimiento (agua, fuego, etc.)
+    private final Integer power, //Potencia del movimiento
+        pp, //Puntos de poder del movimiento (veces que se puede usar el movimiento)
+        accuracy, //Precisión del movimiento (probabilidad de que acierte)
+        priority, //Prioridad del movimiento (si es más rápido que el movimiento del oponente)
+        targetId, //Id del objetivo del movimiento (enemigo, aliado, todos, etc.)
+        damageClassId, //Id de la clase de daño del movimiento (físico, especial, estado)
+        effectId, //Id de la descripción del efecto del movimiento
+        effectChance, //Probabilidad de que se produzca el efecto secundario del movimiento (quemar, hacer retroceder, etc.)
+        contestTypeId, //Id del tipo de concurso del movimiento (si es un movimiento de concurso)
+        contestEffectId, //Id del efecto del movimiento en el concurso (si es un movimiento de concurso)
+        superContestEffectId; //Id del efecto del movimiento en el super concurso (si es un movimiento de concurso)
 
     public MoveCSV(int id, String identifier, int generationId, int typeId, Integer power, Integer pp,
                    Integer accuracy, Integer priority, Integer targetId, Integer damageClassId, Integer effectId,
@@ -31,120 +42,60 @@ public class MoveCSV {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public int getGenerationId() {
         return generationId;
     }
 
-    public void setGenerationId(int generationId) {
-        this.generationId = generationId;
-    }
-
     public int getTypeId() {
         return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
     }
 
     public Integer getPower() {
         return power;
     }
 
-    public void setPower(Integer power) {
-        this.power = power;
-    }
-
     public Integer getPp() {
         return pp;
-    }
-
-    public void setPp(Integer pp) {
-        this.pp = pp;
     }
 
     public Integer getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(Integer accuracy) {
-        this.accuracy = accuracy;
-    }
-
     public Integer getPriority() {
         return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 
     public Integer getTargetId() {
         return targetId;
     }
 
-    public void setTargetId(Integer targetId) {
-        this.targetId = targetId;
-    }
-
     public Integer getDamageClassId() {
         return damageClassId;
-    }
-
-    public void setDamageClassId(Integer damageClassId) {
-        this.damageClassId = damageClassId;
     }
 
     public Integer getEffectId() {
         return effectId;
     }
 
-    public void setEffectId(Integer effectId) {
-        this.effectId = effectId;
-    }
-
     public Integer getEffectChance() {
         return effectChance;
-    }
-
-    public void setEffectChance(Integer effectChance) {
-        this.effectChance = effectChance;
     }
 
     public Integer getContestTypeId() {
         return contestTypeId;
     }
 
-    public void setContestTypeId(Integer contestTypeId) {
-        this.contestTypeId = contestTypeId;
-    }
-
     public Integer getContestEffectId() {
         return contestEffectId;
     }
 
-    public void setContestEffectId(Integer contestEffectId) {
-        this.contestEffectId = contestEffectId;
-    }
-
     public Integer getSuperContestEffectId() {
         return superContestEffectId;
-    }
-
-    public void setSuperContestEffectId(Integer superContestEffectId) {
-        this.superContestEffectId = superContestEffectId;
     }
 
     @Override

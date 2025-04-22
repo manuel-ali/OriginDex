@@ -5,7 +5,7 @@ package com.origindex.testgame.csvimport.csvmodels.pokemon;
  * Relaciona el ID del Pokémon con el ID de la estadística (HP, ataque, defensa, etc.),
  */
 public class PokemonStatCSV {
-    private int pokemonId, //Id del pokemon
+    private final int pokemonId, //Id del pokemon
             statId, //Id de la estadística (HP, ataque, defensa, etc.)
             baseStat, //Valor base de la estadística
             effort; //Valor de esfuerzo (EV) que otorga al ser derrotado
@@ -21,32 +21,16 @@ public class PokemonStatCSV {
         return pokemonId;
     }
 
-    public void setPokemonId(int pokemonId) {
-        this.pokemonId = pokemonId;
-    }
-
     public int getStatId() {
         return statId;
-    }
-
-    public void setStatId(int statId) {
-        this.statId = statId;
     }
 
     public int getBaseStat() {
         return baseStat;
     }
 
-    public void setBaseStat(int baseStat) {
-        this.baseStat = baseStat;
-    }
-
     public int getEffort() {
         return effort;
-    }
-
-    public void setEffort(int effort) {
-        this.effort = effort;
     }
 
     @Override
