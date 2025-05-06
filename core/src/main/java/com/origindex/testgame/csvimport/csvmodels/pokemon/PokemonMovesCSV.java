@@ -9,16 +9,16 @@ public class PokemonMovesCSV {
         moveId, //Id del movimiento que aprende el pokemon
         level, //Nivel al que aprende el movimiento
         pokemonMoveMethodId; //Id del método por el que aprende el movimiento (nivel, máquina, etc.)
-    private final Integer order; //Orden en el que aprende el movimiento (solo tiene importancia visual)
+    private final Integer orderIndex; //Orden en el que aprende el movimiento (solo tiene importancia visual)
     private final Boolean mastery; //Indica si el movimiento puede ser dominado (Legends: Arceus.)
 
-    public PokemonMovesCSV(int pokemonId, int versionGroupId, int moveId, int level, int pokemonMoveMethodId, Integer order, Boolean mastery) {
+    public PokemonMovesCSV(int pokemonId, int versionGroupId, int moveId, int level, int pokemonMoveMethodId, Integer orderIndex, Boolean mastery) {
         this.pokemonId = pokemonId;
         this.versionGroupId = versionGroupId;
         this.moveId = moveId;
         this.level = level;
         this.pokemonMoveMethodId = pokemonMoveMethodId;
-        this.order = order;
+        this.orderIndex = orderIndex;
         this.mastery = mastery;
     }
 
@@ -42,8 +42,8 @@ public class PokemonMovesCSV {
         return pokemonMoveMethodId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderIndex() {
+        return orderIndex;
     }
 
     public Boolean getMastery() {
@@ -58,7 +58,7 @@ public class PokemonMovesCSV {
             ", moveId=" + moveId +
             ", level=" + level +
             ", pokemonMoveMethodId=" + pokemonMoveMethodId +
-            ", order=" + order +
+            ", orderIndex=" + orderIndex +
             ", mastery=" + mastery +
             '}';
     }

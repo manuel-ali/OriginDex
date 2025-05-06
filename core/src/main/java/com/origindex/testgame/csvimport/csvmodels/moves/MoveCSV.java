@@ -8,19 +8,16 @@ public class MoveCSV {
         typeId; //Id del tipo de movimiento (agua, fuego, etc.)
     private final Integer power, //Potencia del movimiento
         pp, //Puntos de poder del movimiento (veces que se puede usar el movimiento)
-        accuracy, //Precisión del movimiento (probabilidad de que acierte)
-        priority, //Prioridad del movimiento (si es más rápido que el movimiento del oponente)
+        accuracy; //Precisión del movimiento (probabilidad de que acierte)
+    private final int priority, //Prioridad del movimiento (si es más rápido que el movimiento del oponente)
         targetId, //Id del objetivo del movimiento (enemigo, aliado, todos, etc.)
-        damageClassId, //Id de la clase de daño del movimiento (físico, especial, estado)
-        effectId, //Id de la descripción del efecto del movimiento
-        effectChance, //Probabilidad de que se produzca el efecto secundario del movimiento (quemar, hacer retroceder, etc.)
-        contestTypeId, //Id del tipo de concurso del movimiento (si es un movimiento de concurso)
-        contestEffectId, //Id del efecto del movimiento en el concurso (si es un movimiento de concurso)
-        superContestEffectId; //Id del efecto del movimiento en el super concurso (si es un movimiento de concurso)
+        damageClassId; //Id de la clase de daño del movimiento (físico, especial, estado)
+    private final Integer effectId, //Id de la descripción del efecto del movimiento
+        effectChance; //Probabilidad de que se produzca el efecto secundario del movimiento (quemar, hacer retroceder, etc.)
 
     public MoveCSV(int id, String identifier, int generationId, int typeId, Integer power, Integer pp,
-                   Integer accuracy, Integer priority, Integer targetId, Integer damageClassId, Integer effectId,
-                   Integer effectChance, Integer contestTypeId, Integer contestEffectId, Integer superContestEffectId) {
+                   Integer accuracy, int priority, int targetId, int damageClassId, Integer effectId,
+                   Integer effectChance) {
         this.id = id;
         this.identifier = identifier;
         this.generationId = generationId;
@@ -33,9 +30,6 @@ public class MoveCSV {
         this.damageClassId = damageClassId;
         this.effectId = effectId;
         this.effectChance = effectChance;
-        this.contestTypeId = contestTypeId;
-        this.contestEffectId = contestEffectId;
-        this.superContestEffectId = superContestEffectId;
     }
 
     public int getId() {
@@ -66,15 +60,15 @@ public class MoveCSV {
         return accuracy;
     }
 
-    public Integer getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public Integer getTargetId() {
+    public int getTargetId() {
         return targetId;
     }
 
-    public Integer getDamageClassId() {
+    public int getDamageClassId() {
         return damageClassId;
     }
 
@@ -84,18 +78,6 @@ public class MoveCSV {
 
     public Integer getEffectChance() {
         return effectChance;
-    }
-
-    public Integer getContestTypeId() {
-        return contestTypeId;
-    }
-
-    public Integer getContestEffectId() {
-        return contestEffectId;
-    }
-
-    public Integer getSuperContestEffectId() {
-        return superContestEffectId;
     }
 
     @Override
@@ -113,9 +95,6 @@ public class MoveCSV {
             ", damageClassId=" + damageClassId +
             ", effectId=" + effectId +
             ", effectChance=" + effectChance +
-            ", contestTypeId=" + contestTypeId +
-            ", contestEffectId=" + contestEffectId +
-            ", superContestEffectId=" + superContestEffectId +
             '}';
     }
 }
