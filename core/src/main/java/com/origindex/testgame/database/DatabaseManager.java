@@ -2,6 +2,7 @@ package com.origindex.testgame.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseManager {
@@ -19,5 +20,10 @@ public class DatabaseManager {
         if (connection != null){
             connection.close();
         }
+    }
+
+    public static Integer getNullableInt(ResultSet rs, String columnName) throws SQLException {
+        Integer value = rs.getInt(columnName);
+        return rs.wasNull() ? null : value;
     }
 }
