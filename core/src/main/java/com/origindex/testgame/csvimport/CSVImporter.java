@@ -2,9 +2,7 @@ package com.origindex.testgame.csvimport;
 
 import com.badlogic.gdx.Gdx;
 import com.origindex.testgame.csvimport.csvmodels.*;
-import com.origindex.testgame.csvimport.csvmodels.moves.MoveCSV;
-import com.origindex.testgame.csvimport.csvmodels.moves.MoveDamageClassCSV;
-import com.origindex.testgame.csvimport.csvmodels.moves.MoveTargetCSV;
+import com.origindex.testgame.csvimport.csvmodels.moves.*;
 import com.origindex.testgame.csvimport.csvmodels.pokemon.*;
 import com.origindex.testgame.database.DatabaseManager;
 
@@ -34,6 +32,10 @@ public class CSVImporter {
             importTypeEfficacy(connection, "csv/type_efficacy.csv");
             importTypes(connection, "csv/types.csv");
             importVersionGroups(connection, "csv/version_groups.csv");
+            importMoveMetaStatChanges(connection, "csv/moves/move_meta_stat_changes.csv");
+            importMoveMetaCategories(connection, "csv/moves/move_meta_categories.csv");
+            importMoveMetaAilments(connection, "csv/moves/move_meta_ailments.csv");
+            importMoveMeta(connection, "csv/moves/move_meta.csv");
         }catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
             throw new RuntimeException(e);
@@ -42,17 +44,21 @@ public class CSVImporter {
 
     public static void importStarter(){
         try (Connection connection = DatabaseManager.getConnection()){
-            importStarterPokemon(connection, "csv/pokemon/pokemon.csv");
+            Set<Integer> validPokemonIds = importStarterPokemon(connection, "csv/pokemon/pokemon.csv");
+            Set<Integer> validMovesIds = importStarterPokemonMoves(connection, "csv/pokemon/pokemon_moves.csv", validPokemonIds);
+            importStarterMoves(connection, "csv/moves/moves.csv", validMovesIds);
+            importStarterPokemonStats(connection, "csv/pokemon/pokemon_stats.csv", validPokemonIds);
+            importStarterPokemonTypes(connection, "csv/pokemon/pokemon_types.csv", validPokemonIds);
         }catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public static void importStarterPokemon(Connection connection, String csvPath) throws SQLException{
+    public static Set<Integer> importStarterPokemon(Connection connection, String csvPath) throws SQLException{
         String sql = "insert into pokemon (id, identifier, species_id, height, weight, base_experience, order_index, is_default) values (?,?,?,?,?,?,?,?)";
         List<PokemonCSV> pokemon = new ArrayList<>();
-        Set<Integer> validIds = new HashSet<>(Arrays.asList(1, 4, 7));
+        Set<Integer> validPokemonIds = new HashSet<>(Arrays.asList(1, 4, 7));
 
         try(PreparedStatement stmt = connection.prepareStatement(sql);
             BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
@@ -70,7 +76,7 @@ public class CSVImporter {
 
                 int id = parseNullableInteger(parts[0]);
 
-                if (!validIds.contains(id)){
+                if (!validPokemonIds.contains(id)){
                     continue;
                 }
 
@@ -99,13 +105,15 @@ public class CSVImporter {
             System.out.println("Importados los starter pokemon: ");
             System.out.println(pokemon);
 
-            importStarterPokemonMoves(connection, "csv/pokemon/pokemon_moves.csv", validIds);
+            return validPokemonIds;
         }catch (IOException e) {
             System.out.println("Error al leer el archivo CSV: " + e.getMessage());
         }
+
+        return validPokemonIds;
     }
 
-    public static void importStarterPokemonMoves(Connection connection, String csvPath, Set<Integer> validPokemonIds) throws SQLException{
+    public static Set<Integer> importStarterPokemonMoves(Connection connection, String csvPath, Set<Integer> validPokemonIds) throws SQLException{
         String sql = "insert into pokemon_moves (pokemon_id, version_group_id, move_id, level, pokemon_move_method_id, order_index, mastery) values (?,?,?,?,?,?,?)";
         List<PokemonMovesCSV> pokemonMoves = new ArrayList<>();
         Set<Integer> validMovesIds = new HashSet<>(12);
@@ -140,7 +148,7 @@ public class CSVImporter {
                 int level = parseNullableInteger(parts[3]);
                 int pokemonMoveMethodId = parseNullableInteger(parts[4]);
                 Integer orderIndex = parseNullableInteger(parts[5]);
-                Boolean mastery = parseNullableBoolean(parts[6]);
+                Integer mastery = parseNullableInteger(parts[6]);
 
                 stmt.setInt(1, pokemonId);
                 stmt.setInt(2, versionGroupId);
@@ -164,10 +172,12 @@ public class CSVImporter {
             System.out.println("Importados todos los pokemon moves: ");
             System.out.println(pokemonMoves);
 
-            importStarterMoves(connection, "csv/moves/moves.csv", validMovesIds);
+            return validMovesIds;
         }catch (IOException e) {
             System.out.println("Error al leer el archivo CSV: " + e.getMessage());
         }
+
+        return validMovesIds;
     }
 
     public static void importStarterMoves(Connection connection, String csvPath, Set<Integer> validMovesIds) throws SQLException{
@@ -230,6 +240,94 @@ public class CSVImporter {
             System.out.println("Importados todos los moves: ");
             System.out.println(moves);
         }catch (IOException e){
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importStarterPokemonStats(Connection connection, String csvPath, Set<Integer> validPokemonIds) throws SQLException{
+        String sql = "insert into pokemon_stats (pokemon_id, stat_id, base_stat, effort) values (?,?,?,?)";
+        List<PokemonStatCSV> pokemonStats = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int pokemonId = parseNullableInteger(parts[0]);
+
+                if (!validPokemonIds.contains(pokemonId)){
+                    continue;
+                }
+
+                int statId = parseNullableInteger(parts[1]);
+                int baseStat = parseNullableInteger(parts[2]);
+                int effort = parseNullableInteger(parts[3]);
+
+                stmt.setInt(1, pokemonId);
+                stmt.setInt(2, statId);
+                stmt.setInt(3, baseStat);
+                stmt.setInt(4, effort);
+                stmt.addBatch();
+
+                pokemonStats.add(new PokemonStatCSV(pokemonId, statId, baseStat, effort));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importadas todas las starter pokemon stats: ");
+            System.out.println(pokemonStats);
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importStarterPokemonTypes(Connection connection, String csvPath, Set<Integer> validPokemonIds) throws SQLException{
+        String sql = "insert into pokemon_types (pokemon_id, type_id, slot) values (?,?,?)";
+        List<PokemonTypeCSV> pokemonTypes = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int id = parseNullableInteger(parts[0]);
+
+                if (!validPokemonIds.contains(id)){
+                    continue;
+                }
+
+                int typeId = parseNullableInteger(parts[1]);
+                int slot = parseNullableInteger(parts[2]);
+
+                stmt.setInt(1, id);
+                stmt.setInt(2, typeId);
+                stmt.setInt(3, slot);
+                stmt.addBatch();
+
+                pokemonTypes.add(new PokemonTypeCSV(id, typeId, slot));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importados todos los starter pokemon types: ");
+            System.out.println(pokemonTypes);
+        }catch (IOException e) {
             System.out.println("Error al leer el archivo CSV: " + e.getMessage());
         }
     }
@@ -510,7 +608,7 @@ public class CSVImporter {
                 int level = parseNullableInteger(parts[3]);
                 int pokemonMoveMethodId = parseNullableInteger(parts[4]);
                 Integer orderIndex = parseNullableInteger(parts[5]);
-                Boolean mastery = parseNullableBoolean(parts[6]);
+                Integer mastery = parseNullableInteger(parts[6]);
 
                 stmt.setInt(1, pokemonId);
                 stmt.setInt(2, versionGroupId);
@@ -875,6 +973,177 @@ public class CSVImporter {
             stmt.executeBatch();
             System.out.println("Importados todos los version groups: ");
             System.out.println(versionGroups);
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importMoveMeta(Connection connection, String csvPath) throws SQLException{
+        String sql = "insert into move_meta (move_id, meta_category_id, meta_ailment_id, min_hits, max_hits, min_turns, max_turns, drain,\n" +
+            "healing, crit_rate, ailment_chance, flinch_chance, stat_chance) \n" +
+            "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        List<MoveMetaCSV> moveMetas = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int moveId = parseNullableInteger(parts[0]);
+                int metaCategoryId = parseNullableInteger(parts[1]);
+                int metaAilmentId = parseNullableInteger(parts[2]);
+                Integer minHits = parseNullableInteger(parts[3]);
+                Integer maxHits = parseNullableInteger(parts[4]);
+                Integer minTurns = parseNullableInteger(parts[5]);
+                Integer maxTurns = parseNullableInteger(parts[6]);
+                int drain = parseNullableInteger(parts[7]);
+                int healing = parseNullableInteger(parts[8]);
+                int critRate = parseNullableInteger(parts[9]);
+                int ailmentChance = parseNullableInteger(parts[10]);
+                int flinchChance = parseNullableInteger(parts[11]);
+                int statChance = parseNullableInteger(parts[12]);
+
+                stmt.setInt(1, moveId);
+                stmt.setInt(2, metaCategoryId);
+                stmt.setInt(3, metaAilmentId);
+                stmt.setObject(4, minHits);
+                stmt.setObject(5, maxHits);
+                stmt.setObject(6, minTurns);
+                stmt.setObject(7, maxTurns);
+                stmt.setInt(8, drain);
+                stmt.setInt(9, healing);
+                stmt.setInt(10, critRate);
+                stmt.setInt(11, ailmentChance);
+                stmt.setInt(12, flinchChance);
+                stmt.setInt(13, statChance);
+                stmt.addBatch();
+
+                moveMetas.add(new MoveMetaCSV(moveId, metaCategoryId, metaAilmentId, minHits, maxHits, minTurns, maxTurns,
+                    drain, healing, critRate, ailmentChance, flinchChance, statChance));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importados todos los move meta: ");
+            System.out.println(moveMetas);
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importMoveMetaStatChanges(Connection connection, String csvPath) throws SQLException{
+        String sql = "insert into move_meta_stat_changes (move_id, stat_id, change) values (?,?,?)";
+        List<MoveMetaStatChangeCSV> moveMetaStatChanges = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int moveId = parseNullableInteger(parts[0]);
+                int statId = parseNullableInteger(parts[1]);
+                int change = parseNullableInteger(parts[2]);
+
+                stmt.setInt(1, moveId);
+                stmt.setInt(2, statId);
+                stmt.setInt(3, change);
+                stmt.addBatch();
+
+                moveMetaStatChanges.add(new MoveMetaStatChangeCSV(moveId, statId, change));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importados todos los move meta stat changes: ");
+            System.out.println(moveMetaStatChanges);
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importMoveMetaCategories(Connection connection, String csvPath) throws SQLException{
+        String sql = "insert into move_meta_categories (id, identifier) values (?,?)";
+        List<MoveMetaCategoriesCSV> moveMetaCategories = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int id = parseNullableInteger(parts[0]);
+                String identifier = parseNullableString(parts[1]);
+
+                stmt.setInt(1, id);
+                stmt.setString(2, identifier);
+                stmt.addBatch();
+
+                moveMetaCategories.add(new MoveMetaCategoriesCSV(id, identifier));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importados todas las move meta categories: ");
+            System.out.println(moveMetaCategories);
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+
+    public static void importMoveMetaAilments(Connection connection, String csvPath) throws SQLException{
+        String sql = "insert into move_meta_ailments (id, identifier) values (?,?)";
+        List<MoveMetaAilmentCSV> moveMetaAilments = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(sql);
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(Gdx.files.internal(csvPath).read()))
+        ){
+            String line;
+            boolean skipHeader = true;
+
+            while ((line = bfr.readLine()) != null){
+                if (skipHeader){
+                    skipHeader = false;
+                    continue;
+                }
+
+                String[] parts = line.split(",");
+
+                int id = parseNullableInteger(parts[0]);
+                String identifier = parseNullableString(parts[1]);
+
+                stmt.setInt(1, id);
+                stmt.setString(2, identifier);
+                stmt.addBatch();
+
+                moveMetaAilments.add(new MoveMetaAilmentCSV(id, identifier));
+            }
+
+            stmt.executeBatch();
+            System.out.println("Importados todos los move meta ailments: ");
+            System.out.println(moveMetaAilments);
         }catch (IOException e) {
             System.out.println("Error al leer el archivo CSV: " + e.getMessage());
         }
