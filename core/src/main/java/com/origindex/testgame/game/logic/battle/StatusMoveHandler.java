@@ -12,11 +12,16 @@ import java.util.Map;
 
 public class StatusMoveHandler {
     /**
-     * Handles the problem states (Poison, paralyzed, etc.)
-     * @param pokemon Pokemon that used the move.
-     * @param enemyStatMap Stats map from the enemy pokemon
-     * @param pkmnStats Stats of the pokemon
-     * @param move used move
+     * Applies the effects of a status move that modifies stats (e.g., Attack ↑, Defense ↓).
+     * Updates the affected Pokémon's stat map and recalculates their final stat values.
+     * Also generates battle log messages describing the changes.
+     *
+     * @param pokemon The Pokémon that used the move.
+     * @param enemyStatMap The current stat modifier map of the target Pokémon.
+     * @param pkmnStats The base and final stats of the attacking Pokémon.
+     * @param move The move being used.
+     * @param enemy The opposing Pokémon affected by the move.
+     * @param messages The battle message list where status updates are added.
      */
     public static void handleStatusMove(ActivePokemon pokemon, Map<Stat, Integer> enemyStatMap, List<PokemonStatValue> pkmnStats, ActiveMove move, ActivePokemon enemy, List<String> messages){
         for (MoveMetaStatChange statChange: move.getMove().getStatChanges()){
@@ -29,16 +34,21 @@ public class StatusMoveHandler {
     }
 
     /**
-     * Handles the stats modifier (increase, decrease)
-     * @param pkmnStatMap Stats map by the pokemon
-     * @param pkmnStats Stats by the pokemon
-     * @param stat Stat to modify
-     * @param modifier Modifier to apply
+     * Applies a stat stage modifier (increase or decrease) to a specific stat.
+     * Updates both the stat modifier map and the Pokémon’s final stat value,
+     * then adds a message describing the change to the battle log.
+     *
+     * @param pkmnStatMap The map storing current stage modifiers for each stat.
+     * @param pkmnStats The list of Pokémon stats containing base and final values.
+     * @param stat The stat being modified.
+     * @param modifier The amount of stage change to apply (positive or negative).
+     * @param nickname The Pokémon’s nickname for display in messages.
+     * @param messages The list where the result message will be added.
      */
     private static void handleStatusModifier(Map<Stat, Integer> pkmnStatMap, List<PokemonStatValue> pkmnStats, Stat stat, int modifier, String nickname, List<String> messages){
         Map<Integer, Double> statsMap = getStatsMap();
         for (PokemonStatValue statValue: pkmnStats){
-            if (statValue.getStat().equals(stat)){ //Comprobar que siempre estoy cambiando la stat del player
+            if (statValue.getStat().equals(stat)){
                 int newModifier = pkmnStatMap.get(statValue.getStat()) + (modifier);
                 pkmnStatMap.put(statValue.getStat(), newModifier);
                 statValue.setFinalStat((int) (statValue.getFinalStat() * statsMap.get(newModifier)));
@@ -47,6 +57,14 @@ public class StatusMoveHandler {
         }
     }
 
+    /**
+     * Builds a descriptive message for a stat change event.
+     *
+     * @param stat The affected stat.
+     * @param nickname The Pokémon's nickname.
+     * @param modifier The change amount applied.
+     * @return A formatted string describing the stat change.
+     */
     private static String getStatusModifierString(Stat stat, String nickname, int modifier) {
         StringBuilder sb = new StringBuilder();
         sb.append(nickname).append(" ").append(stat.getIdentifier());
@@ -61,8 +79,10 @@ public class StatusMoveHandler {
     }
 
     /**
-     * Initialize the stats map
-     * @return Stats map
+     * Returns a mapping between stage modifier values (-6 to +6)
+     * and their corresponding stat multipliers.
+     *
+     * @return A map of stage modifiers to stat multipliers.
      */
     private static Map<Integer, Double> getStatsMap(){
         Map<Integer, Double> statsMap = new HashMap<>();
