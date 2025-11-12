@@ -17,29 +17,31 @@ public class MoveMetaRepository {
             "mma.id as ailment_id, mma.identifier as ailment_identifier\n" +
             "from move_meta mm\n" +
             "join move_meta_categories mmc on mm.meta_category_id = mmc.id\n" +
-            "join move_meta_ailments mma on mm.meta_ailment_id = mma.id";
+            "join move_meta_ailments mma on mm.meta_ailment_id = mma.id\n" +
+            " where move_id = ?";
 
         try (PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, moveID);
-            ResultSet rs = preparedStatement.executeQuery();
+            try (ResultSet rs = preparedStatement.executeQuery()){
+                if (rs.next()){
+                    MoveMetaCategory metaCategory = new MoveMetaCategory(rs.getInt("category_id"), rs.getString("category_identifier"));
+                    MoveMetaAilment metaAilment = new MoveMetaAilment(rs.getInt("ailment_id"), rs.getString("ailment_identifier"));
+                    Integer minHits = DatabaseManager.getNullableInt(rs, "min_hits");
+                    Integer maxHits = DatabaseManager.getNullableInt(rs, "max_hits");
+                    Integer minTurns = DatabaseManager.getNullableInt(rs, "min_turns");
+                    Integer maxTurns = DatabaseManager.getNullableInt(rs, "max_turns");
+                    int drain = rs.getInt("drain");
+                    int healing = rs.getInt("healing");
+                    int critRate = rs.getInt("crit_rate");
+                    int ailmentChance = rs.getInt("ailment_chance");
+                    int flinchChance = rs.getInt("flinch_chance");
+                    int statChance = rs.getInt("stat_chance");
 
-            if (rs.next()){
-                MoveMetaAilment metaAilment = new MoveMetaAilment(rs.getInt("ailment_id"), rs.getString("ailment_identifier"));
-                MoveMetaCategory metaCategory = new MoveMetaCategory(rs.getInt("category_id"), rs.getString("category_identifier"));
-                Integer minHits = DatabaseManager.getNullableInt(rs, "min_hits");
-                Integer maxHits = DatabaseManager.getNullableInt(rs, "max_hits");
-                Integer minTurns = DatabaseManager.getNullableInt(rs, "min_turns");
-                Integer maxTurns = DatabaseManager.getNullableInt(rs, "max_turns");
-                int drain = rs.getInt("drain");
-                int healing = rs.getInt("healing");
-                int critRate = rs.getInt("crit_rate");
-                int ailmentChance = rs.getInt("ailment_chance");
-                int flinchChance = rs.getInt("flinch_chance");
-                int statChance = rs.getInt("stat_chance");
-
-                return new MoveMeta(metaCategory, metaAilment, minHits, maxHits, minTurns, maxTurns, drain, healing, critRate, ailmentChance, flinchChance, statChance);
+                    return new MoveMeta(metaCategory, metaAilment, minHits, maxHits, minTurns, maxTurns, drain, healing, critRate, ailmentChance, flinchChance, statChance);
+                }
             }
         }catch (SQLException e){
+            System.out.println("Error al obtener el move meta por ID: " + e.getMessage());
             e.printStackTrace();
         }
 
