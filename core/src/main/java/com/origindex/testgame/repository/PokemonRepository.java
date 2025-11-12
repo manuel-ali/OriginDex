@@ -29,23 +29,23 @@ public class PokemonRepository {
 
         try (PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, pokemonId);
-            ResultSet rs = preparedStatement.executeQuery();
+            try (ResultSet rs = preparedStatement.executeQuery()){
+                if (rs.next()){
+                    int id = rs.getInt("id");
+                    String identifier = rs.getString("identifier");
+                    int speciesId = rs.getInt("species_id");
+                    int height = rs.getInt("height");
+                    int weight = rs.getInt("weight");
+                    int baseExperience = rs.getInt("base_experience");
+                    Integer orderIndex = DatabaseManager.getNullableInt(rs, "order_index");
+                    Boolean isDefault = rs.getObject("is_default", Boolean.class);
 
-            while (rs.next()){
-                int id = rs.getInt("id");
-                String identifier = rs.getString("identifier");
-                int speciesId = rs.getInt("species_id");
-                int height = rs.getInt("height");
-                int weight = rs.getInt("weight");
-                int baseExperience = rs.getInt("base_experience");
-                Integer orderIndex = DatabaseManager.getNullableInt(rs, "order_index");
-                Boolean isDefault = rs.getObject("is_default", Boolean.class);
-
-                return new Pokemon(id, identifier, height, weight, baseExperience, orderIndex, isDefault, null, null, null);
+                    return new Pokemon(id, identifier, height, weight, baseExperience, orderIndex, isDefault, null, null, null);
+                }
             }
         }catch (SQLException e){
             System.out.println("Error al obtener el Pokémon por ID: " + e.getMessage());
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return null;
@@ -66,34 +66,35 @@ public class PokemonRepository {
 
         try (PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, pokemonId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
-                MoveDamageClass moveDamageClass = null;
-                int damageClassId = rs.getInt("damage_class_id");
-                if (!rs.wasNull()) {
-                    moveDamageClass = new MoveDamageClass(
-                        damageClassId,
-                        rs.getString("dc_identifier")
+            try (ResultSet rs = preparedStatement.executeQuery()){
+                while (rs.next()){
+                    MoveDamageClass moveDamageClass = null;
+                    int damageClassId = rs.getInt("damage_class_id");
+                    if (!rs.wasNull()) {
+                        moveDamageClass = new MoveDamageClass(
+                            damageClassId,
+                            rs.getString("dc_identifier")
+                        );
+                    }
+                    Stat stat = new Stat(
+                        rs.getInt("stat_id"),
+                        moveDamageClass,
+                        rs.getString("stat_identifier"),
+                        rs.getBoolean("is_battle_only"),
+                        rs.getInt("game_index")
                     );
+                    PokemonStat pokemonStat = new PokemonStat(
+                        stat,
+                        rs.getInt("base_stat"),
+                        rs.getInt("effort")
+                    );
+                    // Agregar la estadística a la lista
+                    stats.add(pokemonStat);
                 }
-                Stat stat = new Stat(
-                    rs.getInt("stat_id"),
-                    moveDamageClass,
-                    rs.getString("stat_identifier"),
-                    rs.getBoolean("is_battle_only"),
-                    rs.getInt("game_index")
-                );
-                PokemonStat pokemonStat = new PokemonStat(
-                    stat,
-                    rs.getInt("base_stat"),
-                    rs.getInt("effort")
-                );
-                // Agregar la estadística a la lista
-                stats.add(pokemonStat);
             }
         }catch (SQLException e){
             System.out.println("Error al obtener las estadísticas del Pokémon por ID: " + e.getMessage());
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return stats;
@@ -118,25 +119,26 @@ public class PokemonRepository {
 
         try(PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, pokemonId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
-                Region region = new Region(rs.getInt("region_id"), rs.getString("region_identifier"));
-                Generation generation = new Generation(rs.getInt("generation_id"), region, rs.getString("generation_identifier"));
-                VersionGroup versionGroup = new VersionGroup(rs.getInt("version_group_id"), rs.getString("version_group_identifier"), generation, rs.getInt("version_group_order_index"));
-                PokemonMoveMethod pokemonMoveMethod = new PokemonMoveMethod(rs.getInt("pokemon_move_method_id"), rs.getString("pokemon_move_method_identifier"));
+            try (ResultSet rs = preparedStatement.executeQuery()){
+                while (rs.next()){
+                    Region region = new Region(rs.getInt("region_id"), rs.getString("region_identifier"));
+                    Generation generation = new Generation(rs.getInt("generation_id"), region, rs.getString("generation_identifier"));
+                    VersionGroup versionGroup = new VersionGroup(rs.getInt("version_group_id"), rs.getString("version_group_identifier"), generation, rs.getInt("version_group_order_index"));
+                    PokemonMoveMethod pokemonMoveMethod = new PokemonMoveMethod(rs.getInt("pokemon_move_method_id"), rs.getString("pokemon_move_method_identifier"));
 
-                int moveId = rs.getInt("move_id");
-                moveIdsToLoad.add(moveId);
+                    int moveId = rs.getInt("move_id");
+                    moveIdsToLoad.add(moveId);
 
-                PokemonMove pokemonMove = new PokemonMove(versionGroup, null, rs.getInt("level"), pokemonMoveMethod, rs.getInt("pokemon_move_order_index"), rs.getInt("mastery"));
-                moves.add(pokemonMove);
-                pokemonMoveAssignments.put(pokemonMove, moveId);
+                    PokemonMove pokemonMove = new PokemonMove(versionGroup, null, rs.getInt("level"), pokemonMoveMethod, rs.getInt("pokemon_move_order_index"), rs.getInt("mastery"));
+                    moves.add(pokemonMove);
+                    pokemonMoveAssignments.put(pokemonMove, moveId);
+                }
             }
 
             // Cargar los movimientos en el mapa
             HashMap<Integer, Move> movesToLoad = new HashMap<>();
             for (int moveId : moveIdsToLoad){ //Recorro el set los ID's de los movimientos que tengo que cargar
-                movesToLoad.put(moveId, MoveRepository.getMoveById(moveId));
+                movesToLoad.put(moveId, MoveRepository.getCompleteMoveById(moveId));
             }
 
             // Asignar los movimientos a los PokemonMove
@@ -146,7 +148,7 @@ public class PokemonRepository {
             }
         }catch (SQLException e){
             System.out.println("Error al obtener los movimientos del Pokémon por ID: " + e.getMessage());
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return moves;
     }
@@ -171,41 +173,42 @@ public class PokemonRepository {
 
         try(PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)){
             preparedStatement.setInt(1, pokemonId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
-                MoveDamageClass moveDamageClass = null;
-                rs.getInt("type_damage_class_id");
-                if (!rs.wasNull()) {
-                    moveDamageClass = new MoveDamageClass(
-                        rs.getInt("type_damage_class_id"),
-                        rs.getString("type_damage_class_identifier")
-                    );
-                }
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                while (rs.next()){
+                    MoveDamageClass moveDamageClass = null;
+                    rs.getInt("type_damage_class_id");
+                    if (!rs.wasNull()) {
+                        moveDamageClass = new MoveDamageClass(
+                            rs.getInt("type_damage_class_id"),
+                            rs.getString("type_damage_class_identifier")
+                        );
+                    }
 
-                Type type = new Type(
-                    rs.getInt("type_id"),
-                    rs.getString("type_identifier"),
-                    new Generation(
-                        rs.getInt("type_generation_id"),
-                        new Region(
-                            rs.getInt("generation_region_id"),
-                            rs.getString("generation_region_identifier")
+                    Type type = new Type(
+                        rs.getInt("type_id"),
+                        rs.getString("type_identifier"),
+                        new Generation(
+                            rs.getInt("type_generation_id"),
+                            new Region(
+                                rs.getInt("generation_region_id"),
+                                rs.getString("generation_region_identifier")
+                            ),
+                            rs.getString("generation_identifier")
                         ),
-                        rs.getString("generation_identifier")
-                    ),
-                    moveDamageClass
-                );
+                        moveDamageClass
+                    );
 
-                PokemonType pokemonType = new PokemonType(
-                    type,
-                    rs.getInt("slot")
-                );
+                    PokemonType pokemonType = new PokemonType(
+                        type,
+                        rs.getInt("slot")
+                    );
 
-                types.add(pokemonType);
+                    types.add(pokemonType);
+                }
             }
         }catch (SQLException e){
             System.out.println("Error al obtener los tipos del Pokémon por ID: " + e.getMessage());
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return types;
