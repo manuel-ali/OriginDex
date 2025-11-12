@@ -16,6 +16,14 @@ public class Move {
     private MoveMeta meta;
     private List<MoveMetaStatChange> statChanges;
 
+    public boolean isSpecialMove(){
+        return getDamageClass().getIdentifier().equals("special") ? true : false;
+    }
+
+    public boolean isStatusMove(){
+        return getDamageClass().getIdentifier().equals("status") ? true : false;
+    }
+
     public Move(int id, String identifier, Generation generation, Type type, Integer power, Integer pp, Integer accuracy,
                 int priority, MoveTarget target, MoveDamageClass damageClass, Integer effectChance,
                 MoveMeta meta, List<MoveMetaStatChange> statChanges) {
