@@ -37,26 +37,25 @@ public class MoveRepository {
 
         try(PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)) {
             preparedStatement.setInt(1, moveId);
-            ResultSet rs = preparedStatement.executeQuery();
+            try (ResultSet rs = preparedStatement.executeQuery()){
+                if (rs.next()) {
+                    int id = rs.getInt("move_id");
+                    String identifier = rs.getString("move_identifier");
+                    Region region = new Region(rs.getInt("region_id"), rs.getString("region_identifier"));
+                    Generation generation = new Generation(rs.getInt("generation_Id"), region, rs.getString("generation_identifier"));
+                    Type type = TypeRepository.getTypeById(rs.getInt("move_type_id"));
+                    Integer power = DatabaseManager.getNullableInt(rs, "power");
+                    Integer pp = DatabaseManager.getNullableInt(rs, "pp");
+                    Integer accuracy = DatabaseManager.getNullableInt(rs, "accuracy");
+                    int priority = rs.getInt("priority");
+                    MoveTarget target = new MoveTarget(rs.getInt("target_id"), rs.getString("target_identifier"));
+                    MoveDamageClass moveDamageClass = new MoveDamageClass(rs.getInt("damage_class_id"), rs.getString("damage_class_identifier"));
+                    Integer effectId = DatabaseManager.getNullableInt(rs, "move_effect_id");
+                    Integer effectChance = DatabaseManager.getNullableInt(rs, "effect_chance");
 
-            if (rs.next()) {
-                int id = rs.getInt("move_id");
-                String identifier = rs.getString("move_identifier");
-                Region region = new Region(rs.getInt("region_id"), rs.getString("region_identifier"));
-                Generation generation = new Generation(rs.getInt("generation_Id"), region, rs.getString("generation_identifier"));
-                Type type = TypeRepository.getTypeById(rs.getInt("move_type_id"));
-                Integer power = DatabaseManager.getNullableInt(rs, "power");
-                Integer pp = DatabaseManager.getNullableInt(rs, "pp");
-                Integer accuracy = DatabaseManager.getNullableInt(rs, "accuracy");
-                int priority = rs.getInt("priority");
-                MoveTarget target = new MoveTarget(rs.getInt("target_id"), rs.getString("target_identifier"));
-                MoveDamageClass moveDamageClass = new MoveDamageClass(rs.getInt("damage_class_id"), rs.getString("damage_class_identifier"));
-                Integer effectId = DatabaseManager.getNullableInt(rs, "move_effect_id");
-                Integer effectChance = DatabaseManager.getNullableInt(rs, "effect_chance");
-
-                return new Move(id, identifier, generation, type, power, pp, accuracy, priority, target, moveDamageClass, effectChance, null, null);
+                    return new Move(id, identifier, generation, type, power, pp, accuracy, priority, target, moveDamageClass, effectChance, null, null);
+                }
             }
-
         }catch (SQLException e){
             System.out.println("Error al obtener un movimiento por ID: " + e.getMessage());
             e.printStackTrace();
@@ -77,18 +76,18 @@ public class MoveRepository {
 
         try(PreparedStatement preparedStatement = DatabaseManager.getConnection().prepareStatement(query)) {
             preparedStatement.setInt(1, moveId);
-            ResultSet rs = preparedStatement.executeQuery();
+            try(ResultSet rs = preparedStatement.executeQuery()){
+                while (rs.next()) {
+                    MoveDamageClass moveDamageClass = null;
+                    int moveDamageClassId = rs.getInt("damage_class_id");
+                    if (!rs.wasNull()) {
+                        moveDamageClass = new MoveDamageClass(moveDamageClassId, rs.getString("move_damage_class_identifier"));
+                    }
 
-            while (rs.next()) {
-                MoveDamageClass moveDamageClass = null;
-                int moveDamageClassId = rs.getInt("damage_class_id");
-                if (!rs.wasNull()) {
-                    moveDamageClass = new MoveDamageClass(moveDamageClassId, rs.getString("damage_class_identifier"));
+                    Stat stat = new Stat(rs.getInt("stat_id"), moveDamageClass, rs.getString("stat_identifier"), rs.getBoolean("is_battle_only"), DatabaseManager.getNullableInt(rs, "game_index"));
+                    int change = rs.getInt("change");
+                    statChanges.add(new MoveMetaStatChange(stat, change));
                 }
-
-                Stat stat = new Stat(rs.getInt("stat_id"), moveDamageClass, rs.getString("stat_identifier"), rs.getBoolean("is_battle_only"), DatabaseManager.getNullableInt(rs, "game_index"));
-                int change = rs.getInt("change");
-                statChanges.add(new MoveMetaStatChange(stat, change));
             }
         }catch (SQLException e){
             System.out.println("Error al obtener el move meta stat change de un movimiento por su ID: " + e.getMessage());
