@@ -84,7 +84,7 @@ public class BattleUI {
         rootTable.add(topTable).expandY().center().width(798).row();
         rootTable.add(centerTable).center().width(798).row();
         rootTable.add(bottomTable).center().padBottom(30).width(798);
-        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("view/battle/battle_background_2.jpg")))));
+        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("view/battle/battle_background.jpg")))));
         createProgressBarStyle();
         createButtonStyle();
         createTopUI();
