@@ -1,5 +1,7 @@
 package com.origindex.testgame.game.model;
 
+import java.util.Objects;
+
 public class Stat {
     private int id;
     private MoveDamageClass damageClass;
@@ -53,6 +55,18 @@ public class Stat {
 
     public void setGameIndex(Integer gameIndex) {
         this.gameIndex = gameIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Stat stat = (Stat) o;
+        return id == stat.id && isBattleOnly == stat.isBattleOnly && Objects.equals(damageClass, stat.damageClass) && Objects.equals(identifier, stat.identifier) && Objects.equals(gameIndex, stat.gameIndex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, damageClass, identifier, isBattleOnly, gameIndex);
     }
 
     @Override
