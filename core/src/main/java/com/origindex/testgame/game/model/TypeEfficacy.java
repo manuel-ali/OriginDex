@@ -1,5 +1,7 @@
 package com.origindex.testgame.game.model;
 
+import java.util.Objects;
+
 public class TypeEfficacy {
     private Type attackerType;
     private Type targetType;
@@ -33,6 +35,18 @@ public class TypeEfficacy {
 
     public void setDamageFactor(int damageFactor) {
         this.damageFactor = damageFactor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeEfficacy that = (TypeEfficacy) o;
+        return Objects.equals(attackerType, that.attackerType) && Objects.equals(targetType, that.targetType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(attackerType, targetType);
     }
 
     @Override
