@@ -1,5 +1,7 @@
 package com.origindex.testgame.game.model;
 
+import java.util.Objects;
+
 public class MoveDamageClass {
     private int id;
     private String identifier;
@@ -23,6 +25,18 @@ public class MoveDamageClass {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        MoveDamageClass that = (MoveDamageClass) o;
+        return id == that.id && Objects.equals(identifier, that.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, identifier);
     }
 
     @Override
