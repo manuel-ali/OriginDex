@@ -1,0 +1,115 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "overWorldMap.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "BitsAndBobs(no_scale).tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "Character_MegaPack.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "Overworld_Final.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "SmlHouseFinal.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 5.5
+        },
+        "SmlHouseFinal_rework.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 5.5,
+            "scaleInEditor": 8
+        },
+        "Store_Final.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiles_FinalLayout_rework.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 3
+        },
+        "WoodhouseFinal.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 5.5
+        },
+        "WoodhouseFinal_rework_2.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
+        "character_megaPack.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "npc_sprites.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "npcs.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 4,
+            "scaleInEditor": 3
+        },
+        "overWorldMap.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 287.33333333333337,
+                "y": 158.66666666666663
+            }
+        }
+    },
+    "frame.defaultDuration": 300,
+    "last.exportedFilePath": "C:/Users/manug/Documents/originDex_maps/overWorld",
+    "last.imagePath": "C:/Users/manug/Documents/tileSet/Character_MegaPack/atlas",
+    "last.objectTemplatePath": "C:/Users/manug/Documents/originDex_maps/overWorld",
+    "map.height": 40,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 60,
+    "openFiles": [
+        "overWorldMap.tmx"
+    ],
+    "project": "overworld.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "overWorldMap.tmx",
+        "npcs.tsx",
+        "character_megaPack.tsx",
+        "Overworld_Final.tsx",
+        "npc_sprites.tsx",
+        "Store_Final.tsx",
+        "Character_MegaPack.tsx",
+        "BitsAndBobs(no_scale).tsx",
+        "WoodhouseFinal_rework_2.tsx",
+        "Tiles_FinalLayout_rework.tsx",
+        "WoodhouseFinal.tsx",
+        "SmlHouseFinal_rework.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.type": 0
+}
