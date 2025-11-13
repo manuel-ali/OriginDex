@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DatabaseManager {
+public class DatabaseManager implements DatabaseConnector{
     private static final String DB_PATH = "jdbc:sqlite:assets/database/origindex.db";
     private static Connection connection;
 
@@ -16,7 +16,7 @@ public class DatabaseManager {
         return connection;
     }
 
-    public static void closeCoonnection() throws SQLException{
+    public static void closeConnection() throws SQLException{
         if (connection != null){
             connection.close();
         }
