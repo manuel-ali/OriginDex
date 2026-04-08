@@ -4,19 +4,95 @@ import com.origindex.testgame.game.model.Pokemon;
 import com.origindex.testgame.game.model.PokemonStat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ActivePokemon {
+    public static final String HP_STAT = "hp";
+    public static final String ATTACK_STAT = "attack";
+    public static final String DEFENSE_STAT = "defense";
+    public static final String SP_ATTACK_STAT = "special-attack";
+    public static final String SP_DEFENSE_STAT = "special-defense";
+    public static final String SPEED_STAT = "speed";
+    public static final String ACCURACY_STAT = "accuracy";
+    public static final String EVASION_STAT = "evasion";
     private Pokemon specie;
     private String nickname;
     private int level;
     private int currentHP;
     private int maxHP;
-    private int actualXP;
-    private int nextLevelXP;
+    private int currentXp;
+    private int nextLevelXp;
     private List<PokemonStatValue> stats;
     private List<ActiveMove> learnedMoves;
+    private Map<String, Integer> statStages;
     private boolean isFainted;
+    private boolean isPlayer;
+
+    public int getModifiedAttack(){
+        return getModifiedStat(ATTACK_STAT);
+    }
+
+    public int getModifiedDefense(){
+        return getModifiedStat(DEFENSE_STAT);
+    }
+
+    public int getModifiedSpecialAttack(){
+        return getModifiedStat(SP_ATTACK_STAT);
+    }
+
+    public int getModifiedSpecialDefense(){
+        return getModifiedStat(SP_DEFENSE_STAT);
+    }
+
+    public int getModifiedSpeed(){
+        return getModifiedStat(SPEED_STAT);
+    }
+
+    public int getAccuracyStage(){
+        return statStages.get(ACCURACY_STAT);
+    }
+
+    public int getEvasionStage(){
+        return statStages.get(EVASION_STAT);
+    }
+
+    private int getModifiedStat(String identifier){
+        int finalStat = getFinalStatByIdentifier(identifier);
+        int stage = statStages.getOrDefault(identifier, 0);
+
+        double modifier = getStatStageModifier(stage);
+
+        return (int) (finalStat * modifier);
+    }
+
+    public double getAccuracyEvasionStageModifier(int stage){
+        if (stage >= 0) {
+            return (3.0 + stage) / 3.0;
+        } else {
+            return 3.0 / (3.0 - stage);
+        }
+    }
+
+    private double getStatStageModifier(int stage) {
+        if (stage >= 0){
+            return (2.0 + stage) / 2.0;
+        }else {
+            return 2.0 / (2.0 - stage);
+        }
+    }
+
+    public void initStatsMapModifier(){
+        statStages = new HashMap<>();
+        for (PokemonStatValue statValue: stats){
+            String statIdentifier = statValue.getStat().getIdentifier();
+            statStages.put(statIdentifier, 0);
+        }
+
+        statStages.put(ACCURACY_STAT, 0);
+        statStages.put(EVASION_STAT, 0);
+    }
 
     private List<PokemonStatValue> generateFinalStatsFromBase(){
         List<PokemonStat> baseStats = specie.getStats();
@@ -30,90 +106,50 @@ public class ActivePokemon {
         return finalStats;
     }
 
+    public int getFinalStatByIdentifier(String identifier){
+        return stats.stream().filter(s -> s.getStat().getIdentifier().equals(identifier))
+            .map(PokemonStatValue::getFinalStat)
+            .findAny()
+            .orElseThrow(() -> new IllegalStateException("Stat with identifier " + identifier + " not found"));
+    }
+
     private int getHPStat(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("hp")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de HP
+        return getFinalStatByIdentifier(HP_STAT);
     }
 
     public int getAttackStat(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("attack")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de Attack
+        return getFinalStatByIdentifier(ATTACK_STAT);
     }
 
     public int getDefenseStat(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("defense")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de Defense
+        return getFinalStatByIdentifier(DEFENSE_STAT);
     }
 
     public int getSpecialAttackStat() {
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("special-attack")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de Special Attack
+        return getFinalStatByIdentifier(SP_ATTACK_STAT);
     }
 
     public int getSpecialDefenseStat() {
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("special-defense")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de Special Defense
+        return getFinalStatByIdentifier(SP_DEFENSE_STAT);
     }
 
     public int getSpeedStat(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("speed")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 1; // Devuelvo 1 si no encuentro el stat de Speed
+        return getFinalStatByIdentifier(SPEED_STAT);
     }
 
-    public int getAccuracy(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("accuracy")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 0; // Devuelvo 0 si no encuentro el stat de Accuracy
-    }
-
-    public int getEvasion(){
-        for (PokemonStatValue stat : stats) {
-            if (stat.getStat().getIdentifier().equals("evasion")) {
-                return stat.getFinalStat();
-            }
-        }
-        return 0; // Devuelvo 0 si no encuentro el stat de Evasion
-    }
-
-    public ActivePokemon(Pokemon specie, String nickname, int level, int actualXP, int nextLevelXP,
-                         List<ActiveMove> learnedMoves) {
+    public ActivePokemon(Pokemon specie, String nickname, int level, int currentXp, int nextLevelXp,
+                         List<ActiveMove> learnedMoves, boolean isPlayer) {
         this.specie = specie;
         this.nickname = nickname;
         this.level = level;
-        this.actualXP = actualXP;
-        this.nextLevelXP = nextLevelXP;
+        this.currentXp = currentXp;
+        this.nextLevelXp = nextLevelXp;
         this.learnedMoves = learnedMoves;
         this.stats = generateFinalStatsFromBase();
         this.currentHP = getHPStat();
         this.maxHP = getHPStat();
         this.isFainted = false;
+        this.isPlayer = isPlayer;
     }
 
     public Pokemon getSpecie() {
@@ -156,20 +192,20 @@ public class ActivePokemon {
         this.maxHP = maxHP;
     }
 
-    public int getActualXP() {
-        return actualXP;
+    public int getCurrentXp() {
+        return currentXp;
     }
 
-    public void setActualXP(int actualXP) {
-        this.actualXP = actualXP;
+    public void setCurrentXp(int currentXp) {
+        this.currentXp = currentXp;
     }
 
-    public int getNextLevelXP() {
-        return nextLevelXP;
+    public int getNextLevelXp() {
+        return nextLevelXp;
     }
 
-    public void setNextLevelXP(int nextLevelXP) {
-        this.nextLevelXP = nextLevelXP;
+    public void setNextLevelXp(int nextLevelXp) {
+        this.nextLevelXp = nextLevelXp;
     }
 
     public List<PokemonStatValue> getStats() {
@@ -188,12 +224,28 @@ public class ActivePokemon {
         this.learnedMoves = learnedMoves;
     }
 
+    public Map<String, Integer> getStatStages() {
+        return statStages;
+    }
+
+    public void setStatStages(Map<String, Integer> statStages) {
+        this.statStages = statStages;
+    }
+
     public boolean isFainted() {
         return isFainted;
     }
 
     public void setFainted(boolean fainted) {
         isFainted = fainted;
+    }
+
+    public boolean isPlayer() {
+        return isPlayer;
+    }
+
+    public void setPlayer(boolean player) {
+        isPlayer = player;
     }
 
     @Override
@@ -203,8 +255,8 @@ public class ActivePokemon {
             ", nickname='" + nickname + '\'' +
             ", level=" + level +
             ", currentHP=" + currentHP +
-            ", actualXP=" + actualXP +
-            ", nextLevelXP=" + nextLevelXP +
+            ", currentXp=" + currentXp +
+            ", nextLevelXp=" + nextLevelXp +
             ", stats=" + stats +
             ", learnedMoves=" + learnedMoves +
             ", isFainted=" + isFainted +
