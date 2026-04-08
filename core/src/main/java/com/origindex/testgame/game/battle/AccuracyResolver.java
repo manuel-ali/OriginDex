@@ -18,8 +18,8 @@ public class AccuracyResolver {
             return true;
         }
 
-        double attackerAccuracy = attacker.getAccuracyEvasionStageModifier(attacker.getModifiedAccuracy());
-        double defenderEvasion = defender.getAccuracyEvasionStageModifier(defender.getModifiedEvasion());
+        double attackerAccuracy = attacker.getAccuracyEvasionStageModifier(attacker.getAccuracyStage());
+        double defenderEvasion = defender.getAccuracyEvasionStageModifier(defender.getEvasionStage());
         double probability = moveAccuracy * (attackerAccuracy / defenderEvasion);
         double random = Math.random() * 100;
 
