@@ -1,4 +1,4 @@
-package com.origindex.testgame.game.logic.battle;
+package com.origindex.testgame.game.battle;
 
 import com.origindex.testgame.game.entity.ActivePokemon;
 
@@ -7,6 +7,15 @@ public class Battle {
     private ActivePokemon pokemonEnemy;
     private int turn;
     private boolean isFinished;
+
+    public ActivePokemon getEnemy(ActivePokemon user){
+        return user.isPlayer() ? pokemonEnemy : pokemonPlayer;
+    }
+
+    public void initBattle() {
+        pokemonPlayer.initStatsMapModifier();
+        pokemonEnemy.initStatsMapModifier();
+    }
 
     public void nextTurn() {
         this.turn++;
