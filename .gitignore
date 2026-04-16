@@ -13,6 +13,7 @@ gradle-app.setting
 /headless/build/
 /server/build/
 /shared/build/
+gradle/daemon-jvm.properties
 
 ## Java:
 *.class
