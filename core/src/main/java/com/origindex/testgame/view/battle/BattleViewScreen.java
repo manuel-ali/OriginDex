@@ -10,30 +10,71 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.origindex.testgame.Main;
-import com.origindex.testgame.game.logic.battle.BattleManager;
+import com.origindex.testgame.game.battle.BattleController;
+import com.origindex.testgame.game.battle.BattleStep;
 import com.origindex.testgame.view.MapScreen;
+import com.origindex.testgame.view.battle.sprites.MoveData;
 
-public class BattleScreen implements Screen {
-    private final BattleManager battleManager;
+import java.util.List;
+import java.util.Queue;
+
+public class BattleViewScreen implements Screen {
+    private final BattleController battleController;
+    private final BattleHud battleHud;
     private Main game;
     private MapScreen mapScreen;
     private Stage stage;
     private Skin skin;
-    private BattleUI battleUI;
 
-    public BattleScreen(BattleManager battleManager, Main game, MapScreen mapScreen) {
-        this.battleManager = battleManager;
+
+    public BattleViewScreen(Main game, MapScreen mapScreen, BattleController battleController) {
         this.game = game;
         this.mapScreen = mapScreen;
+        this.battleController = battleController;
         this.stage = new Stage(new FitViewport(960, 640));
         this.skin = new Skin(Gdx.files.internal("view/uiskin.json"));
-        this.battleUI = new BattleUI(stage, skin, battleManager);
+        this.battleHud = new BattleHud(stage, skin, battleController);
     }
 
     @Override
     public void show() {
         startFadeIn(1f);
-        battleUI.showBattleScreen();
+        PokemonData player = battleController.getPlayerData();
+        PokemonData enemy = battleController.getEnemyData();
+
+        battleHud.setPlayerData(player);
+        battleHud.setEnemyData(enemy);
+        battleHud.setMessage("What should " + player.nickname() + " do?");
+        battleHud.showBattleScreen();
+
+        battleController.startBattle();
+
+        battleController.setListener(new BattleListener() {
+            @Override
+            public void onTurnFinished() {
+
+            }
+
+            @Override
+            public void executeSteps(Queue<BattleStep> steps) {
+                battleHud.processBattleSteps(steps);
+            }
+
+            @Override
+            public void onShowMoves(List<MoveData> moves) {
+                battleHud.showMoves(moves);
+            }
+
+            @Override
+            public void onShowMessage(String message) {
+                battleHud.setMessage(message);
+            }
+
+            @Override
+            public void onBattleEnded() {
+                fadeOutAndSwitchScreen(game, mapScreen, 1.0f);
+            }
+        });
     }
 
     @Override
@@ -43,12 +84,6 @@ public class BattleScreen implements Screen {
 
         stage.act(delta);
         stage.draw();
-
-        if (battleManager.getBattle().isFinished() && !battleUI.isShowingMessage()) {
-            fadeOutAndSwitchScreen(game, mapScreen, 1f);
-            battleManager.getBattle().getPokemonEnemy().setCurrentHP(battleManager.getBattle().getPokemonEnemy().getMaxHP());
-            mapScreen.restorePlayerPosition(mapScreen.getLastPlayerPosition());
-        }
     }
 
     private void startFadeIn(float duration) {
