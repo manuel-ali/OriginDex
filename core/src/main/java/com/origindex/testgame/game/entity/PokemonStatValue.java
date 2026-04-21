@@ -18,7 +18,7 @@ public class PokemonStatValue {
     }
 
     private int calculateStat(String statName, int baseStat, int iv, int ev, int level) {
-        if (statName.equals("hp")) {
+        if (statName.equals(ActivePokemon.HP_STAT)) {
             return ((2 * baseStat + iv + (ev / 4)) * level) / 100 + level + 10;
         } else {
             return ((2 * baseStat + iv + (ev / 4)) * level) / 100 + 5;
