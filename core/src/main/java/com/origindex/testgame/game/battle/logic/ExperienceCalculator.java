@@ -1,4 +1,4 @@
-package com.origindex.testgame.game.logic;
+package com.origindex.testgame.game.battle.logic;
 
 public class ExperienceCalculator {
     /**
