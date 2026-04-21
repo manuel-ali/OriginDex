@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.origindex.testgame.game.logic.PokemonFactory;
+import com.origindex.testgame.game.battle.logic.PokemonFactory;
 import com.origindex.testgame.view.MapScreen;
 
-public class Player extends Trainer{
+public class Player extends Trainer {
     private final float WALKSPEED = 50f;
     private final float RUNSPEED = 100f;
     private int tileX, tileY;
@@ -27,7 +27,7 @@ public class Player extends Trainer{
 
 
     public Player(int tileX, int tileY, int tileSize) {
-        this.activePokemon = PokemonFactory.getRandomPokemon();
+        this.activePokemon = PokemonFactory.getRandomPokemon(true);
         this.tileX = tileX;
         this.tileY = tileY;
         this.x = tileX * tileSize;
