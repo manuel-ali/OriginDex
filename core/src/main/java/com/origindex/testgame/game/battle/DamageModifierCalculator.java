@@ -1,5 +1,6 @@
-package com.origindex.testgame.game.logic.battle;
+package com.origindex.testgame.game.battle;
 
+import com.origindex.testgame.game.entity.ActiveMove;
 import com.origindex.testgame.game.entity.ActivePokemon;
 import com.origindex.testgame.game.model.Move;
 import com.origindex.testgame.game.model.PokemonType;
@@ -9,16 +10,15 @@ import java.util.List;
 public class DamageModifierCalculator {
     /**
      * Calculates the damage modifier for an attack (Stab, type effectivity, etc.).
-     * @param attacker attacker pokemon
-     * @param target target pokemon
-     * @param move used move
+     * @param stabModifier The stab modifier, 1.5 if the move and user move type are the same, 1.0 if not.
+     * @param effectivenessModifier The effectiveness modifier can be 2.0, 1.0 or 0.
      * @return damage modifier in double format
      */
-    public static double calculateDamageModifier(ActivePokemon attacker, ActivePokemon target, Move move, List<String> messages){
+    public static double calculateTotalDamageModifier(double stabModifier, double effectivenessModifier){
         double modifier = 1.0;
 
-        modifier *= isStab(attacker, move);
-        modifier *= TypeEffectivenessResolver.getTypeEffectivenessModifier(target, move, messages);
+        modifier *= stabModifier;
+        modifier *= effectivenessModifier;
 
         return modifier;
     }
@@ -29,9 +29,10 @@ public class DamageModifierCalculator {
      * @param move used move
      * @return damage modifier in double format
      */
-    private static double isStab(ActivePokemon attacker, Move move){
+    public static double getStabModifier(ActivePokemon attacker, ActiveMove move){
         List<PokemonType> types = attacker.getSpecie().getTypes();
-        String moveTypeIdentifier = move.getType().getIdentifier().toLowerCase();
+        Move usedMove = move.getMove();
+        String moveTypeIdentifier = usedMove.getType().getIdentifier().toLowerCase();
 
         for (PokemonType type: types){
             String typeIdentifier = type.getType().getIdentifier().toLowerCase();
