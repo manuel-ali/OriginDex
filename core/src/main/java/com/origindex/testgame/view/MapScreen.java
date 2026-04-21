@@ -28,11 +28,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.origindex.testgame.Main;
+import com.origindex.testgame.game.battle.BattleController;
 import com.origindex.testgame.game.entity.Npc;
 import com.origindex.testgame.game.entity.Player;
-import com.origindex.testgame.game.logic.battle.Battle;
-import com.origindex.testgame.game.logic.battle.BattleManager;
-import com.origindex.testgame.view.battle.BattleScreen;
+import com.origindex.testgame.game.battle.Battle;
+import com.origindex.testgame.game.battle.BattleLogic;
+import com.origindex.testgame.view.battle.BattleViewScreen;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -337,8 +338,10 @@ public class MapScreen implements Screen {
     private void handleBattleInteraction(Npc npc) {
         lastPlayerPosition = new Vector2(player.getX(), player.getY());
         Battle battle = new Battle(player.getActivePokemon(), npc.getActivePokemon());
-        BattleManager battleManager = new BattleManager(battle);
-        fadeOutAndSwitchScreen(game, new BattleScreen(battleManager, game, this), 1f);
+        BattleLogic battleLogic = new BattleLogic(battle);
+        BattleController controller = new BattleController(battleLogic, battle);
+
+        fadeOutAndSwitchScreen(game, new BattleViewScreen(game, this, controller), 1f);
     }
 
     public void restorePlayerPosition(Vector2 position) {
