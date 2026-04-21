@@ -2,7 +2,7 @@ package com.origindex.testgame.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.origindex.testgame.game.logic.PokemonFactory;
+import com.origindex.testgame.game.battle.logic.PokemonFactory;
 import com.origindex.testgame.view.MapScreen;
 
 public class Npc extends Trainer{
@@ -21,7 +21,7 @@ public class Npc extends Trainer{
         this.y = tileY * tileSize;
         this.actionType = actionType;
         if (actionType.equals("battle")){
-            this.activePokemon = PokemonFactory.getRandomPokemon();
+            this.activePokemon = PokemonFactory.getRandomPokemon(false);
         }
         parseDirection(defaultDirection);
         loadAnimations(spriteName);
