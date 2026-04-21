@@ -1,4 +1,4 @@
-package com.origindex.testgame.game.logic.battle;
+package com.origindex.testgame.game.battle;
 
 import com.origindex.testgame.game.entity.ActiveMove;
 
@@ -17,8 +17,8 @@ public class PriorityResolver {
         int playerPriority = playerMove.getMove().getPriority();
         int enemyPriority = enemyMove.getMove().getPriority();
 
-        if (playerPriority < enemyPriority) return true;
-        if (playerPriority > enemyPriority) return false;
+        if (playerPriority > enemyPriority) return true;
+        if (playerPriority < enemyPriority) return false;
 
         return playerSpeed >= enemySpeed;
     }
