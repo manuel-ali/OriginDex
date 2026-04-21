@@ -1,5 +1,6 @@
-package com.origindex.testgame.game.logic.battle;
+package com.origindex.testgame.game.battle;
 
+import com.origindex.testgame.game.entity.ActiveMove;
 import com.origindex.testgame.game.entity.ActivePokemon;
 import com.origindex.testgame.game.model.Move;
 import com.origindex.testgame.game.model.PokemonType;
@@ -27,20 +28,19 @@ public class TypeEffectivenessResolver {
      *
      * @param target The Pokémon that receives the attack.
      * @param move The move used by the attacker.
-     * @param messages The list to which effectiveness messages are appended for battle display.
      * @return The resulting damage multiplier based on type effectiveness (1.0 = normal effectiveness).
      */
-    public static double getTypeEffectivenessModifier(ActivePokemon target, Move move, List<String> messages){
+    public static double getTypeEffectivenessModifier(ActivePokemon target, ActiveMove move){
         double effectivenessModifier = 1.0;
         List<PokemonType> targetTypes = target.getSpecie().getTypes();
+        Move usedMove = move.getMove();
 
         for (PokemonType type : targetTypes){
-            effectivenessModifier *= getEffectiveness(move.getType(), type.getType());
+            effectivenessModifier *= getEffectiveness(usedMove.getType(), type.getType());
         }
-        getEffectivenessMessage(effectivenessModifier, messages);
+
         return effectivenessModifier;
     }
-
 
     /**
      * Loads the effectiveness relationships between types, from the repository and stores them in a HashMap.
@@ -49,10 +49,10 @@ public class TypeEffectivenessResolver {
      * @return A Map containing all type effectiveness relationships.
      */
     private static Map<TypeEfficacy, Double> loadEffectivenessMap(){
-        List<TypeEfficacy> typeEfficacies = TypeEfficacyRepository.getTypeEfficacies();
+        List<TypeEfficacy> typeEffectiveness = TypeEfficacyRepository.getTypeEfficacies();
         Map<TypeEfficacy, Double> effectivenessMap = new HashMap<>();
 
-        for (TypeEfficacy typeEfficacy: typeEfficacies){
+        for (TypeEfficacy typeEfficacy: typeEffectiveness){
             TypeEfficacy key = new TypeEfficacy(typeEfficacy.getAttackerType(), typeEfficacy.getTargetType(), 0);
             effectivenessMap.put(key, typeEfficacy.getDamageFactor() / 100.0);
         }
@@ -73,22 +73,5 @@ public class TypeEffectivenessResolver {
             return typeEffectivenessMap.get(typeEfficacyKey);
         }
         return 1.0;
-    }
-
-    /**
-     * Appends a descriptive message based on the calculated effectiveness modifier.
-     * Only triggers if the attack is super effective (2.0), not very effective (0.5) or has no effect (0.0).
-     *
-     * @param effectiveness The total effectiveness multiplier of the attack.
-     * @param messages The list where the combat messages are added.
-     */
-    private static void getEffectivenessMessage(double effectiveness, List<String> messages){
-        if (effectiveness == 2.0){
-            messages.add("Es muy efectivo!");
-        }else if (effectiveness == 0.5){
-            messages.add("Es poco efectivo");
-        }else if (effectiveness == 0){
-            messages.add("No afecta al objetivo");
-        }
     }
 }
